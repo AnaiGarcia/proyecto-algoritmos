@@ -1,8 +1,9 @@
 let tecnicoParaEditar = null; // Variable para almacenar el técnico que se va a editar
+let tecnicos = []; // Array para almacenar técnicos
 
 // Cargar técnicos del almacenamiento local al cargar la página
 window.onload = function () {
-  const tecnicos = JSON.parse(localStorage.getItem('tecnicos')) || [];
+  tecnicos = JSON.parse(localStorage.getItem('tecnicos')) || [];
   tecnicos.forEach(tecnico => {
     agregarTecnicoTabla(tecnico.nombre, tecnico.especialidad, tecnico.experiencia);
   });
@@ -26,10 +27,7 @@ function agregarTecnico() {
     // Verificar si ya existe un técnico con el mismo nombre
     if (!tecnicoYaExiste(nombre)) {
       agregarTecnicoTabla(nombre, especialidad, experiencia);
-      
-      // Guardar en localStorage
       guardarTecnicosEnLocalStorage();
-      
       document.getElementById('formulario-tecnico').style.display = 'none';
     } else {
       alert('Ya existe un técnico con ese nombre.');
@@ -40,13 +38,7 @@ function agregarTecnico() {
 }
 
 function tecnicoYaExiste(nombre) {
-  const tbody = document.getElementById('tecnicos-body');
-  for (let row of tbody.rows) {
-    if (row.cells[0].innerText === nombre) {
-      return true; // El técnico ya existe
-    }
-  }
-  return false; // El técnico no existe
+  return tecnicos.some(tecnico => tecnico.nombre === nombre);
 }
 
 function agregarTecnicoTabla(nombre, especialidad, experiencia) {
@@ -65,6 +57,8 @@ function agregarTecnicoTabla(nombre, especialidad, experiencia) {
 
 function eliminarTecnico(button) {
   const row = button.closest('tr');
+  const nombre = row.cells[0].innerText;
+  tecnicos = tecnicos.filter(tecnico => tecnico.nombre !== nombre); // Actualizar array
   row.remove();
   guardarTecnicosEnLocalStorage(); // Actualizar localStorage después de eliminar
 }
@@ -110,8 +104,8 @@ function cancelarEdicion() {
 }
 
 function guardarTecnicosEnLocalStorage() {
-  const tecnicos = [];
   const tbody = document.getElementById('tecnicos-body');
+  tecnicos = []; // Limpiar el array antes de llenarlo nuevamente
   for (let row of tbody.rows) {
     const nombre = row.cells[0].innerText;
     const especialidad = row.cells[1].innerText;
@@ -119,4 +113,64 @@ function guardarTecnicosEnLocalStorage() {
     tecnicos.push({ nombre, especialidad, experiencia });
   }
   localStorage.setItem('tecnicos', JSON.stringify(tecnicos));
+}
+
+// Funciones de búsqueda y ordenación
+document.getElementById('searchBtn').addEventListener('click', function() {
+  const input = document.getElementById('searchInput').value.toLowerCase();
+  const filteredTechnicians = tecnicos.filter(tecnico => 
+    tecnico.nombre.toLowerCase().includes(input) || 
+    tecnico.especialidad.toLowerCase().includes(input || 
+    tecnico.experiencia.toLowerCase().includes(input)
+  ));
+  mostrarTecnicos(filteredTechnicians);
+});
+
+document.getElementById('sortBtn').addEventListener('click', function() {
+  const method = document.getElementById('sortSelect').value;
+  let sortedTechnicians;
+
+  if (method === 'quicksort') {
+    sortedTechnicians = quicksort(tecnicos);
+  } else if (method === 'bubblesort') {
+    sortedTechnicians = bubblesort(tecnicos);
+  } else {
+    sortedTechnicians = tecnicos;
+  }
+
+  mostrarTecnicos(sortedTechnicians);
+});
+
+// Función para mostrar técnicos en la tabla
+function mostrarTecnicos(tecnicos) {
+  const tbody = document.getElementById('tecnicos-body');
+  tbody.innerHTML = ''; // Limpiar la tabla
+
+  tecnicos.forEach(tecnico => {
+    agregarTecnicoTabla(tecnico.nombre, tecnico.especialidad, tecnico.experiencia);
+  });
+}
+
+// Algoritmo Quicksort
+function quicksort(array) {
+  if (array.length < 2) return array;
+  const pivot = array[0];
+  const less = array.filter(item => item.nombre < pivot.nombre);
+  const greater = array.filter(item => item.nombre >= pivot.nombre);
+  return [...quicksort(less), pivot, ...quicksort(greater)];
+}
+
+// Algoritmo Bubblesort
+function bubblesort(array) {
+  const n = array.length;
+  for (let i = 0; i < n - 1; i++) {
+    for (let j = 0; j < n - i - 1; j++) {
+      if (array[j].nombre > array[j + 1].nombre) {
+        const temp = array[j];
+        array[j] = array[j + 1];
+        array[j + 1] = temp;
+      }
+    }
+  }
+  return array;
 }

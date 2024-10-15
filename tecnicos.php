@@ -39,10 +39,15 @@ if(strlen($_SESSION['auth_user'])=="")
     <div class="container">
     
       <div class="search-box">
-        <input type="text" class="input-search" placeholder="Buscar...">
-        <button class="btn-buscar">Buscar</button>
+        <input type="text" class="input-search" id="searchInput" placeholder="Buscar...">
+        <button class="btn-buscar" id="searchBtn">Buscar</button>
+        <select id="sortSelect">
+          <option value="">Ordenar por...</option>
+          <option value="quicksort">Ordenar por nombre (Quicksort)</option>
+          <option value="bubblesort">Ordenar por nombre (Bubblesort)</option>
+        </select>
+        <button class="btn-buscar" id="sortBtn">Ordenar</button>
       </div>
-
     <table class="table" id="tabla-tecnicos">
       <thead>
         <tr>

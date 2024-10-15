@@ -138,3 +138,38 @@ body {
 .back-to-top .btn:hover {
   background-color: #0056b3;
 }
+
+.search-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.input-search {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn-buscar {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff; /* Color del botón */
+  color: white;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.btn-buscar:hover {
+  background-color: #0056b3; /* Color al pasar el mouse */
+}
+
+select {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
