@@ -1,0 +1,149 @@
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f4f9;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  color: #555;
+  text-decoration: none;
+  margin-bottom: 10px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-link:hover {
+  background-color: #f0f0f0;
+  color: #000;
+}
+
+.nav-link.active {
+  background-color: #e0e0e0;
+  color: #000;
+}
+
+.icon-img {
+  width: 24px;
+  height: 24px;
+  margin-right: 12px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.top-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.top-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4a90e2;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.top-button:hover {
+  background-color: #357abd;
+}
+
+.content-container {
+  position: relative; /* Se hace relativo para posicionar los textos sobre la imagen */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 60px); /* Calcula el espacio restante */
+}
+
+.header {
+  position: absolute; /* Posiciona el título y subtítulo sobre la imagen */
+  top: 10%; /* Ajusta el espacio desde la parte superior */
+  text-align: center;
+  color: white; /* Texto blanco */
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco translúcido */
+  padding: 10px 20px; /* Espaciado alrededor del texto */
+  border-radius: 10px; /* Bordes redondeados */
+}
+
+/* Borde rojo para el título */
+.main-title {
+  font-size: 5rem;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  text-shadow: 
+    2px 2px 0 red,  /* Sombra inferior derecha roja */
+    -2px -2px 0 red, /* Sombra superior izquierda roja */
+    -2px 2px 0 red,  /* Sombra inferior izquierda roja */
+    2px -2px 0 red;  /* Sombra superior derecha roja */
+}
+
+/* Borde verde para el subtítulo */
+.sub-title {
+  font-size: 2.8rem;
+  text-shadow: 
+    2px 2px 0 green,  /* Sombra inferior derecha verde */
+    -2px -2px 0 green, /* Sombra superior izquierda verde */
+    -2px 2px 0 green,  /* Sombra inferior izquierda verde */
+    2px -2px 0 green;  /* Sombra superior derecha verde */
+}
+
+.image-container {
+  width: 100%;
+  height: 100%; /* La imagen ahora cubre todo el espacio restante */
+}
+
+.main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 0; /* Imagen detrás del título y subtítulo */
+}

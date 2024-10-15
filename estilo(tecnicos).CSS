@@ -1,0 +1,140 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente para el contenedor */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 2px solid #007bff;
+  color: #007bff;
+}
+
+.input-search {
+  padding: 7px;
+  margin: 10px 0;
+  width: calc(100% - 120px); /* Ajustar el ancho del input para dejar espacio para el botón */
+  display: inline-block; /* Cambiado a inline-block para alinearse junto al botón */
+}
+
+.search-box {
+  display: flex; /* Alinear el input y el botón en línea */
+  align-items: center; /* Centrar verticalmente el contenido */
+}
+
+.btn-buscar {
+  padding: 7px 15px; /* Tamaño del botón */
+  margin-left: 80px; /* Aumentar el espacio entre el input y el botón */
+  background-color: #007bff; /* Color de fondo */
+  color: white; /* Color del texto */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
+  transition: background-color 0.3s; /* Efecto de transición */
+}
+
+.btn-buscar:hover {
+  background-color: #0056b3; /* Color de fondo al pasar el mouse */
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f2f2f2;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+
+.back-to-top {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.back-to-top a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-image: url('imagen/image.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+.back-to-top {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.back-to-top .btn {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.back-to-top .btn:hover {
+  background-color: #0056b3;
+}

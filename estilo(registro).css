@@ -1,0 +1,109 @@
+body {
+  font-family: Arial, sans-serif;
+  background-image: url('Imagen/ALFAJOR2.jpg'); /* Reemplaza con la ruta a tu imagen */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+}
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+}
+.card-header {
+  margin-bottom: 20px;
+}
+.card-header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+.card-header p {
+  margin: 5px 0 0;
+  color: #6b7280;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+}
+.alert {
+  padding: 10px;
+  background-color: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+.alert h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+.alert p {
+  margin: 5px 0 0;
+}
+.button {
+  width: 100%;
+  padding: 10px;
+  background-color: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+.button:disabled {
+  background-color: #93c5fd;
+  cursor: not-allowed;
+}
+.card-footer {
+  text-align: center;
+  margin-top: 20px;
+}
+.card-footer a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+.card-footer a:hover {
+  text-decoration: underline;
+}
+.back-to-top {
+  position: absolute;
+  bottom: 20px;
+  left: 90%; /* Ajusta esta propiedad para mover el botón más a la derecha */
+  transform: translateX(-50%);
+}
+
+.back-to-top .btn {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.back-to-top .btn:hover {
+  background-color: #0056b3;
+}

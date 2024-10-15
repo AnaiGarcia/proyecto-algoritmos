@@ -1,0 +1,142 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-image: url('imagen/alfajor6.jpg'); /* Reemplaza con la ruta a tu imagen */
+  background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+  background-position: center; /* Centra la imagen en el fondo */
+  background-attachment: fixed; /* Hace que la imagen de fondo no se mueva al hacer scroll */
+  color: #333;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente para el contenedor */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #007bff;
+  margin-bottom: 20px;
+}
+
+.add-user {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.back-to-top {
+  display: block;
+  text-align: center;
+  margin: 30px auto;
+}
+
+.back-to-top a {
+  text-decoration: none;
+  background-color: #2654ec;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.back-to-top a:hover {
+  background-color: #140787;
+  transform: scale(1.1);
+}
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.user-table th, .user-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+}
+
+.user-table th {
+  background-color: #007bff;
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+.user-table td {
+  background-color: #f9f9f9;
+}
+
+.btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.modify-user {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.modify-user input {
+  display: block;
+  width: calc(100% - 22px);
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.modify-user button {
+  width: auto; /* Cambia el ancho del botón a auto */
+  padding: 12px 20px; /* Ajusta el padding */
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-right: 10px; /* Espacio entre los botones */
+}
+
+.btn-save {
+  background-color: #28a745; /* Color de fondo para el botón de guardar */
+}
+
+.btn-save:hover {
+  background-color: #218838; /* Color de fondo al pasar el ratón para el botón de guardar */
+}
+
+.btn-cancel {
+  background-color: #dc3545; /* Color de fondo para el botón de cancelar */
+}
+
+.btn-cancel:hover {
+  background-color: #c82333; /* Color de fondo al pasar el ratón para el botón de cancelar */
+}
+
+.hidden {
+  display: none;
+}
