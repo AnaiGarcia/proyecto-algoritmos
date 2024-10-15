@@ -18,7 +18,7 @@
       <nav class="sidebar-nav">
         <a href="#" class="nav-link active">
           <img src="imagen/casa.png" alt="Inicio" class="icon-img">
-          Inicio
+          Panel de inicio
         </a>
         <a href="usuarios.php" class="nav-link">
           <img src="imagen/usuarios.png" alt="Usuarios" class="icon-img">
