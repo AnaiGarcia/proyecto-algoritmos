@@ -1,3 +1,9 @@
+<?php
+session_start();
+error_reporting(0);
+if(strlen($_SESSION['auth_user'])=="")
+{   header("Location: login.php"); }
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

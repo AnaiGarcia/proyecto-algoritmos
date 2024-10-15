@@ -1,3 +1,9 @@
+<?php
+session_start();
+error_reporting(0);
+if(strlen($_SESSION['auth_user'])=="")
+{   header("Location: login.php"); }
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -44,6 +50,10 @@
           <img src="assets/images/reportes.png" alt="Reportes" class="icon-img">
           Reportes
         </a>
+        <a href="salir.php" class="nav-link">
+          <img src="assets/images/reportes.png" alt="Reportes" class="icon-img">
+          Salir
+        </a>
       </nav>
     </aside>
 
@@ -51,10 +61,10 @@
    <main class="main-content">
 
   
-    <div class="top-buttons">
+    <!--<div class="top-buttons">
       <a href="registrarse.php" class="top-button">Registrarse</a>
       <a href="login.php" class="top-button">Iniciar Sesión</a>
-  </div>
+    </div>-->
     <div class="content-container">
       <div class="header">
         <h1 class="main-title">La Casa del Alfajor</h1>
