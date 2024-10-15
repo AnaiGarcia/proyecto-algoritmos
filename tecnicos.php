@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestión de Técnicos</title>
-  <link rel="stylesheet" href="estilo(tecnicos).CSS">
+  <link rel="stylesheet" href="assets/css/tecnicos.css">
 </head>
 <body>
   <a name="inicio"></a> <!-- Ancla para volver al inicio -->
@@ -58,6 +58,6 @@
   </div>
 
   <!-- Asegúrate de que el archivo JavaScript esté correctamente vinculado -->
-  <script src="SCRIPT(TECNICO).JS"></script>
+  <script src="assets/js/tecnicos.js"></script>
 </body>
 </html>

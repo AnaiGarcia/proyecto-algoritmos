@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reportes de Gestión de Incidencias</title>
-    <link rel="stylesheet" href="estilo(reportes).css"> <!-- Enlace al archivo CSS externo -->
+    <link rel="stylesheet" href="assets/css/reportes.css"> <!-- Enlace al archivo CSS externo -->
 </head>
 <body>
     <div id="inicio" class="container">

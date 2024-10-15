@@ -6,7 +6,7 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background-image: url('imagen/alfajor6.jpg'); /* Reemplaza con la ruta a tu imagen */
+    background-image: url('../../assets/images/alfajor6.jpg'); /* Reemplaza con la ruta a tu imagen */
   background-size: cover; /* Asegura que la imagen cubra todo el fondo */
   background-position: center; /* Centra la imagen en el fondo */
   background-attachment: fixed; /* Hace que la imagen de fondo no se mueva al hacer scroll */

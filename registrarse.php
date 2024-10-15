@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registro de Usuario</title>
-  <link rel="stylesheet" href="estilo(registro).css"> <!-- Vinculación del archivo CSS -->
+  <link rel="stylesheet" href="assets/css/registro.css"> <!-- Vinculación del archivo CSS -->
 </head>
 <body>
   <div class="card">

@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Equipos</title>
-    <link rel="stylesheet" href="estilos(equipo).css">
-    <script src="SCRIPT(EQUIPO).JS" defer></script>
+    <link rel="stylesheet" href="assets/css/equipos.css">
+    <script src="assets/js/equipos.js" defer></script>
 </head>
 <body>
     <a name="inicio"></a>
