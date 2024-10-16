@@ -116,17 +116,17 @@ function guardarTecnicosEnLocalStorage() {
 }
 
 // Funciones de búsqueda y ordenación
-document.getElementById('searchBtn').addEventListener('click', function() {
+document.getElementById('searchBtn').addEventListener('click', function () {
   const input = document.getElementById('searchInput').value.toLowerCase();
-  const filteredTechnicians = tecnicos.filter(tecnico => 
-    tecnico.nombre.toLowerCase().includes(input) || 
-    tecnico.especialidad.toLowerCase().includes(input || 
-    tecnico.experiencia.toLowerCase().includes(input)
-  ));
+  const filteredTechnicians = tecnicos.filter(tecnico =>
+    tecnico.nombre.toLowerCase().includes(input) ||
+    tecnico.especialidad.toLowerCase().includes(input ||
+      tecnico.experiencia.toLowerCase().includes(input)
+    ));
   mostrarTecnicos(filteredTechnicians);
 });
 
-document.getElementById('sortBtn').addEventListener('click', function() {
+document.getElementById('sortBtn').addEventListener('click', function () {
   const method = document.getElementById('sortSelect').value;
   let sortedTechnicians;
 
@@ -155,22 +155,25 @@ function mostrarTecnicos(tecnicos) {
 function quicksort(array) {
   if (array.length < 2) return array;
   const pivot = array[0];
-  const less = array.filter(item => item.nombre < pivot.nombre);
-  const greater = array.filter(item => item.nombre >= pivot.nombre);
+  const less = array.slice(1).filter(item => item.nombre < pivot.nombre);
+  const greater = array.slice(1).filter(item => item.nombre >= pivot.nombre);
   return [...quicksort(less), pivot, ...quicksort(greater)];
 }
 
 // Algoritmo Bubblesort
 function bubblesort(array) {
-  const n = array.length;
+  const arrCopy = [...array];
+  const n = arrCopy.length;
+
   for (let i = 0; i < n - 1; i++) {
     for (let j = 0; j < n - i - 1; j++) {
-      if (array[j].nombre > array[j + 1].nombre) {
-        const temp = array[j];
-        array[j] = array[j + 1];
-        array[j + 1] = temp;
+      if (arrCopy[j].nombre > arrCopy[j + 1].nombre) {
+        const temp = arrCopy[j];
+        arrCopy[j] = arrCopy[j + 1];
+        arrCopy[j + 1] = temp;
       }
     }
   }
-  return array;
+  
+  return arrCopy;
 }
