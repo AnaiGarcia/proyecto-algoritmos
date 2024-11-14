@@ -1,26 +1,25 @@
 <?php
 session_start();
 error_reporting(0);
-
-//Diccionario
-$users = [
-    ['nombre' => 'Ruth', 'apellidos' => 'Garcia', 'email' => 'ruth@gmail.com', 'clave' => '1234'],
-    ['nombre' => 'Anai', 'apellidos' => 'Siancas', 'email' => 'anai@gmail.com', 'clave' => '6543'],
-    ['nombre' => 'Pedro', 'apellidos' => 'Morales', 'email' => 'pedro@gmail.com', 'clave' => '0987']
-];
+include('config/db.php');
 
 if ($_SESSION['auth_user'] != '') {
     header("Location: index.php");
 }
 if (isset($_POST['login'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    foreach ($users as $user) {
-        if ($user['email'] == $email && $user['clave'] == $password) {
-            $_SESSION['auth_user'] = $user['nombre'] . ' ' . $user['apellidos'];
-            echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
-        }
+    $user = $_POST['user'];
+    $password = md5($_POST['password']);
+    $sql = "SELECT * FROM usuario WHERE nick=:user and clave=:password limit 1";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':user', $user, PDO::PARAM_STR);
+    $query->bindParam(':password', $password, PDO::PARAM_STR);
+    $query->execute();
+    $result = $query->fetch();
+    if ($result) {
+        $_SESSION['auth_user'] = $result['nick'];
+        echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
+    } else {
+        echo "<script>alert('Datos Invalidos');</script>";
     }
 }
 ?>
@@ -45,8 +44,8 @@ if (isset($_POST['login'])) {
             <p class="card-description">Ingrese sus credenciales para acceder a su cuenta</p>
             <form method="POST" class="login-form">
                 <div class="form-group">
-                    <label for="email">Correo Electrónico</label>
-                    <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required>
+                    <label for="user">Correo Electrónico</label>
+                    <input type="text" id="user" name="user" placeholder="Ingresa tu usuario" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Contraseña</label>
