@@ -1,6 +1,7 @@
 var equipos = [];
+var equipoSeleccionado = null;
 
-async function  listarEquipos   () {
+async function listarEquipos() {
     const response = await fetch('api/equipos/listar.php');
     if (response.ok) {
         equipos = await response.json();
@@ -18,28 +19,49 @@ function mostrarFormulario() {
     document.getElementById('formulario').style.display = 'block';
 }
 
-function cancelarFormulario() {
+function resetearFormulario() {
     document.getElementById('formulario').style.display = 'none';
     document.getElementById('nombre').value = '';
     document.getElementById('tipo').value = '';
     document.getElementById('ubicacion').value = '';
 }
 
-function agregarEquipo() {
+async function agregarEquipo() {
     const nombre = document.getElementById('nombre').value;
     const tipo = document.getElementById('tipo').value;
     const ubicacion = document.getElementById('ubicacion').value;
 
     if (nombre && tipo && ubicacion) {
-        const nuevoEquipo = {
-            nombre: nombre,
-            tipo: tipo,
-            ubicacion: ubicacion,
-        };
+        let response;
+        if (equipoSeleccionado) {
+            response = await fetch('api/equipos/editar.php', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `id=${equipoSeleccionado.id}&nombre=${nombre}&tipo=${tipo}&ubicacion=${ubicacion}`
+            });
+        } else {
+            const body = new FormData();
+            body.append('nombre', nombre);
+            body.append('tipo', tipo);
+            body.append('ubicacion', ubicacion);
+            response = await fetch('api/equipos/guardar.php', {
+                method: 'POST',
+                body
+            });
+        }
 
-        equipos.push(nuevoEquipo);
-        actualizarTabla();
-        cancelarFormulario();
+        const result = await response.json();
+
+        if (result.success) {
+            alert(result.success);
+        } else {
+            alert('Error: ' + result.error);
+        }
+
+        listarEquipos();
+        resetearFormulario();
     } else {
         alert('Por favor, complete todos los campos.');
     }
@@ -85,12 +107,11 @@ function filtrarEquipos() {
 }
 
 function editarEquipo(index) {
-    const equipo = equipos[index];
-    document.getElementById('nombre').value = equipo.nombre;
-    document.getElementById('tipo').value = equipo.tipo;
-    document.getElementById('ubicacion').value = equipo.ubicacion;
+    equipoSeleccionado = equipos[index];
+    document.getElementById('nombre').value = equipoSeleccionado.nombre;
+    document.getElementById('tipo').value = equipoSeleccionado.tipo;
+    document.getElementById('ubicacion').value = equipoSeleccionado.ubicacion;
     document.getElementById('formulario').style.display = 'block';
-    eliminarEquipo(index); // Elimina el equipo que se está editando
 }
 
 function eliminarEquipo(index) {

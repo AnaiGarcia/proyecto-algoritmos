@@ -31,8 +31,8 @@ if(strlen($_SESSION['auth_user'])=="")
             <input type="text" id="nombre" placeholder="Nombre" required>
             <input type="text" id="tipo" placeholder="Tipo" required>
             <input type="text" id="ubicacion" placeholder="Ubicación" required>
-            <button class="btn" onclick="agregarEquipo()">Agregar Equipo</button>
-            <button class="btn" onclick="cancelarFormulario()">Cancelar</button>
+            <button class="btn" onclick="agregarEquipo()">Guardar datos</button>
+            <button class="btn" onclick="resetearFormulario()">Cancelar</button>
         </div>
 
         <table>
