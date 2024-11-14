@@ -71,19 +71,27 @@ function actualizarTabla() {
     const tabla = document.getElementById('equipos-body');
     tabla.innerHTML = ''; // Limpiar tabla existente
 
-    equipos.forEach((equipo, index) => {
+    if (equipos.length) {
+        equipos.forEach((equipo, index) => {
+            const fila = document.createElement('tr');
+            fila.innerHTML = `
+                <td>${equipo.nombre}</td>
+                <td>${equipo.tipo}</td>
+                <td>${equipo.ubicacion}</td>
+                <td>
+                    <button class="btn" onclick="editarEquipo(${index})">Editar</button>
+                    <button class="btn" onclick="eliminarEquipo(${index})">Eliminar</button>
+                </td>
+            `;
+            tabla.appendChild(fila);
+        });
+    } else {
         const fila = document.createElement('tr');
         fila.innerHTML = `
-            <td>${equipo.nombre}</td>
-            <td>${equipo.tipo}</td>
-            <td>${equipo.ubicacion}</td>
-            <td>
-                <button class="btn" onclick="editarEquipo(${index})">Editar</button>
-                <button class="btn" onclick="eliminarEquipo(${index})">Eliminar</button>
-            </td>
-        `;
+                <td rowpan="4">No se encontraron resultados...</td>
+            `;
         tabla.appendChild(fila);
-    });
+    }
 }
 
 async function filtrarEquipos() {
