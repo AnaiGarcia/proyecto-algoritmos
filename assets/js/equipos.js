@@ -1,4 +1,18 @@
-let equipos = [];
+var equipos = [];
+
+async function  listarEquipos   () {
+    const response = await fetch('api/equipos/listar.php');
+    if (response.ok) {
+        equipos = await response.json();
+        if (equipos.error) {
+            console.error('Error al obtener los equipos:', equipos.error);
+            return;
+        }
+        actualizarTabla();
+    } else {
+        console.error('Error al conectar con el servidor');
+    }
+}
 
 function mostrarFormulario() {
     document.getElementById('formulario').style.display = 'block';
@@ -83,3 +97,5 @@ function eliminarEquipo(index) {
     equipos.splice(index, 1);
     actualizarTabla();
 }
+
+listarEquipos();
