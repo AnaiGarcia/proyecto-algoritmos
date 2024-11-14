@@ -86,24 +86,15 @@ function actualizarTabla() {
     });
 }
 
-function filtrarEquipos() {
+async function filtrarEquipos() {
     const busqueda = document.getElementById('busqueda').value.toLowerCase();
-    const tabla = document.getElementById('equipos-body');
-    tabla.innerHTML = ''; // Limpiar tabla existente
-
-    equipos.filter(equipo => equipo.nombre.toLowerCase().includes(busqueda)).forEach((equipo) => {
-        const fila = document.createElement('tr');
-        fila.innerHTML = `
-            <td>${equipo.nombre}</td>
-            <td>${equipo.tipo}</td>
-            <td>${equipo.ubicacion}</td>
-            <td>
-                <button class="btn" onclick="editarEquipo(${index})">Editar</button>
-                <button class="btn" onclick="eliminarEquipo(${index})">Eliminar</button>
-            </td>
-        `;
-        tabla.appendChild(fila);
-    });
+    if (busqueda != '') {
+        const response = await fetch(`api/equipos/busqueda_por_nombre.php?atributo=nombre&valor=${busqueda}`);
+        equipos = await response.json();
+        actualizarTabla();
+    } else {
+        listarEquipos();
+    }
 }
 
 function editarEquipo(index) {

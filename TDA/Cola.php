@@ -24,12 +24,15 @@ class Cola
 
     public function buscarPorAtributo($clave, $valor)
     {
+        $resultados = [];
+
         foreach ($this->cola as $equipo) {
             if (array_key_exists($clave, $equipo) && stripos($equipo[$clave], $valor) !== false) {
-                return $equipo;
+                $resultados[] = $equipo;
             }
         }
-        return null;
+
+        return $resultados;
     }
 
     public function obtenerTodos()
