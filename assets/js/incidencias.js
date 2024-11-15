@@ -64,6 +64,7 @@ async function cargarIncidencias() {
                     <td>${incidencia.id}</td>
                     <td>${incidencia.equipo_nombre}</td>
                     <td>${incidencia.descripcion}</td>
+                    <td>${incidencia.fecha_apertura}</td>
                     <td>${incidencia.prioridad}</td>
                     <td>${incidencia.situacion}</td>
                     <td>

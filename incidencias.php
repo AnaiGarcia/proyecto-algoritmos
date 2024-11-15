@@ -56,6 +56,7 @@ if(strlen($_SESSION['auth_user'])=="")
                     <th>ID</th>
                     <th>Equipo</th>
                     <th>Problema</th>
+                    <th>Aperturado</th>
                     <th>Prioridad</th>
                     <th>Situacion</th>
                     <th>Acciones</th>
