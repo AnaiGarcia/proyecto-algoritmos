@@ -1,0 +1,24 @@
+{
+  "name": "algoritmos/ruth",
+  "description": "Trabajo de algoritmos.",
+  "keywords": [
+    "algoritmos"
+  ],
+  "homepage": "https://www.algoritmos-utp.com",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Grupo de trabajo",
+      "email": "ruth@gmail.com",
+      "homepage": "https://github.com/ruth/algoritmos"
+    }
+  ],
+  "require": {
+    "vlucas/phpdotenv": "^5.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Api\\": "api/"
+    }
+  }
+}
