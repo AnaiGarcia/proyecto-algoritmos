@@ -6,24 +6,22 @@ try {
         parse_str(file_get_contents("php://input"), $_PUT);
 
         $id = isset($_PUT['id']) ? $_PUT['id'] : '';
-        $nombre = isset($_PUT['nombre']) ? $_PUT['nombre'] : '';
-        $tipo = isset($_PUT['tipo']) ? $_PUT['tipo'] : '';
-        $ubicacion = isset($_PUT['ubicacion']) ? $_PUT['ubicacion'] : '';
+        $solucion = isset($_PUT['solucion']) ? $_PUT['solucion'] : '';
+        $fecha_cierre = date('Y-m-d H:i:s');
 
-        if (empty($id) || empty($nombre) || empty($tipo) || empty($ubicacion)) {
+        if (empty($id) || empty($solucion)) {
             echo json_encode(['error' => 'Todos los campos son obligatorios']);
             exit;
         }
 
-        $stmt = $dbh->prepare("UPDATE equipo SET nombre = :nombre, tipo = :tipo, ubicacion = :ubicacion WHERE id = :id");
-        $stmt->bindParam(':nombre', $nombre);
-        $stmt->bindParam(':tipo', $tipo);
-        $stmt->bindParam(':ubicacion', $ubicacion);
+        $stmt = $dbh->prepare("UPDATE incidencia SET solucion = :solucion, fecha_cierre = :fecha_cierre WHERE id = :id");
+        $stmt->bindParam(':solucion', $solucion);
+        $stmt->bindParam(':fecha_cierre', $fecha_cierre);
         $stmt->bindParam(':id', $id);
 
         $stmt->execute();
 
-        echo json_encode(['success' => 'Equipo actualizado correctamente']);
+        echo json_encode(['success' => 'Incidencia actualizada correctamente']);
     } else {
         echo json_encode(['error' => 'Método de solicitud no permitido']);
     }

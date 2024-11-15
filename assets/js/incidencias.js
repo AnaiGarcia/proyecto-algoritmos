@@ -63,6 +63,10 @@ async function cargarIncidencias() {
 
     incidencias.forEach(incidencia => {
         const row = document.createElement('tr');
+        let accion =  ``;
+        if(!incidencia.fecha_cierre){
+            accion = `<button class="btn" onclick="cambiarEstado(${incidencia.id})">Finalizar</button>`;
+        }
         row.innerHTML = `
                     <td>${incidencia.id}</td>
                     <td>${incidencia.equipo_nombre}</td>
@@ -71,7 +75,7 @@ async function cargarIncidencias() {
                     <td>${incidencia.prioridad}</td>
                     <td>${incidencia.situacion}</td>
                     <td>
-                        <button class="btn" onclick="cambiarEstado(${incidencia.id})">Cambiar Estado</button>
+                        ${accion}
                     </td>
                 `;
         tbody.appendChild(row);
@@ -92,14 +96,27 @@ async function cargarEquipos() {
     });
 }
 
-function cambiarEstado(id) {
-    const nuevoEstado = prompt("Ingrese el nuevo estado (Abierta, En Progreso, Cerrada):");
-    if (nuevoEstado) {
-        const incidencia = incidencias.find(inc => inc.id === id);
-        if (incidencia) {
-            incidencia.estado = nuevoEstado;
-            cargarIncidencias();
+async function cambiarEstado(id) {
+    const solucion = prompt("Ingresa la solucion:");
+    if (solucion) {
+
+        const response = await fetch('api/incidencias/editar.php', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `id=${id}&solucion=${solucion}`
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert(result.success);
+        } else {
+            alert('Error: ' + result.error);
         }
+
+        cargarIncidencias();
     }
 }
 
