@@ -16,6 +16,7 @@ async function listarEquipos() {
 }
 
 function mostrarFormulario() {
+    equipoSeleccionado = null;
     document.getElementById('formulario').style.display = 'block';
 }
 
