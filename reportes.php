@@ -21,10 +21,10 @@ if(strlen($_SESSION['auth_user'])=="")
                 <select id="report-type" name="report-type" required>
                     <option value="">Selecciona el tipo de reporte</option>
                     <option value="incidencias">Reporte de Incidencias</option>
-                    <option value="tecnicos">Reporte de Técnicos</option>
+                    <!--<option value="tecnicos">Reporte de Técnicos</option>
                     <option value="equipos">Reporte de Equipos</option>
                     <option value="sedes">Reporte de Sedes</option>
-                    <option value="usuarios">Reporte de Usuarios</option>
+                    <option value="usuarios">Reporte de Usuarios</option>-->
                 </select>
             </div>
             <div>
