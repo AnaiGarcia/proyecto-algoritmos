@@ -15,13 +15,43 @@ if(strlen($_SESSION['auth_user'])=="")
 <body>
     <div class="container mx-auto p-4">
         <h1 class="text-2xl font-bold mb-4">Gestión de Incidencias</h1>
-        
-        <div class="flex space-x-2 mb-4">
-            <button class="btn" onclick="reportarIncidencia()">Reportar Incidencia</button>
-            <button class="btn" onclick="ordenarPorPrioridad()">Ver Incidencias por Prioridad</button>
+         <!-- Contenedor para centrar el botón Registrar Incidencia -->
+         <div class="contenedor-boton">
+            <button class="btn" onclick="registrarIncidencia()">Registrar Incidencia</button>
+        </div>
+         <!-- Contenedor para centrar el campo de búsqueda y el botón Buscar -->
+         <div class="contenedor-busqueda">
             <input type="text" id="busquedaId" placeholder="Buscar por ID" class="max-w-[200px]" />
             <button class="btn" onclick="buscarPorId()">Buscar</button>
-            <button class="btn btn-asignar" onclick="asignarTecnico()">Asignar Técnico</button> <!-- Nuevo botón -->
+        </div>
+
+        <!-- Contenedor para el formulario de registrar incidencia -->
+        <div id="formularioIncidenciaContenedor" style="display: none;">
+           
+            <form id="formIncidencia" onsubmit="guardarIncidencia(event)">
+                <label for="descripcion">Descripción:</label>
+                <input type="text" id="descripcion" name="descripcion" required>
+
+                <label for="equipo">Equipo:</label>
+                <input type="text" id="equipo" name="equipo" required>
+
+                <label for="estado">Estado:</label>
+                <select id="estado" name="estado">
+                    <option value="Abierta">Abierta</option>
+                    <option value="En Progreso">En Progreso</option>
+                    <option value="Cerrada">Cerrada</option>
+                </select>
+
+                <label for="prioridad">Prioridad:</label>
+                <select id="prioridad" name="prioridad">
+                    <option value="Baja">Baja</option>
+                    <option value="Media">Media</option>
+                    <option value="Alta">Alta</option>
+                </select>
+
+                <button type="submit" class="btn">Guardar Incidencia</button>
+                <button type="button" class="btn" onclick="cancelarFormulario()">Cancelar</button>
+            </form>
         </div>
 
         <table>
@@ -56,23 +86,28 @@ if(strlen($_SESSION['auth_user'])=="")
 
         let incidencias = [...incidenciasIniciales];
 
-        function reportarIncidencia() {
-            const descripcion = prompt("Ingrese la descripción de la incidencia:");
-            const equipo = prompt("Ingrese el equipo relacionado con la incidencia:"); // Solicitar el equipo
-            const prioridad = prompt("Ingrese la prioridad (Baja, Media, Alta):");
-            if (descripcion && equipo && prioridad) {
+        function registrarIncidencia() {
+            document.getElementById('formularioIncidenciaContenedor').style.display = 'block';
+        }
+
+        function guardarIncidencia(event) {
+            event.preventDefault();
+
+            const descripcion = document.getElementById('descripcion').value;
+            const equipo = document.getElementById('equipo').value;
+            const estado = document.getElementById('estado').value;
+            const prioridad = document.getElementById('prioridad').value;
+
+            if (descripcion && equipo && estado && prioridad) {
                 const id = Math.max(...incidencias.map(inc => inc.id)) + 1;
-                incidencias.push({ id, descripcion, equipo, estado: 'Abierta', prioridad });
+                incidencias.push({ id, descripcion, equipo, estado, prioridad });
                 cargarIncidencias();
+                cancelarFormulario();
             }
         }
 
-        function ordenarPorPrioridad() {
-            incidencias.sort((a, b) => {
-                const prioridades = { 'Alta': 3, 'Media': 2, 'Baja': 1 };
-                return prioridades[b.prioridad] - prioridades[a.prioridad];
-            });
-            cargarIncidencias();
+        function cancelarFormulario() {
+            document.getElementById('formularioIncidenciaContenedor').style.display = 'none';
         }
 
         function buscarPorId() {
@@ -80,18 +115,6 @@ if(strlen($_SESSION['auth_user'])=="")
             const incidencia = incidencias.find(inc => inc.id == id);
             if (incidencia) {
                 alert(`Incidencia encontrada: ${JSON.stringify(incidencia)}`);
-            } else {
-                alert('Incidencia no encontrada');
-            }
-        }
-
-        function asignarTecnico() {
-            const id = prompt("Ingrese el ID de la incidencia a la que desea asignar un técnico:");
-            const tecnico = prompt("Ingrese el nombre del técnico asignado:");
-            const incidencia = incidencias.find(inc => inc.id == id);
-            if (incidencia) {
-                // Aquí podrías agregar la lógica para asignar el técnico a la incidencia
-                alert(`Técnico ${tecnico} asignado a la incidencia ID ${id}`);
             } else {
                 alert('Incidencia no encontrada');
             }
