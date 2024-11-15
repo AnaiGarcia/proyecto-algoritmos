@@ -39,6 +39,9 @@ async function guardarIncidencia(event) {
 
 function cancelarFormulario() {
     document.getElementById('formularioIncidenciaContenedor').style.display = 'none';
+    document.getElementById('descripcion').value = '';
+    document.getElementById('equipos').value = '';
+    document.getElementById('prioridad').value = '';
 }
 
 function buscarPorId() {

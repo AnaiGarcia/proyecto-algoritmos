@@ -24,7 +24,7 @@ try {
         $stmt->bindParam(':prioridad', $prioridad);
 
         $stmt->execute();
-        echo json_encode(['success' => 'Incidencia guardado correctamente']);
+        echo json_encode(['success' => 'Incidencia guardada correctamente']);
     } else {
         echo json_encode(['error' => 'Método de solicitud no permitido']);
     }
