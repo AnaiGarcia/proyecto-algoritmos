@@ -4,6 +4,22 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Mpdf\Mpdf;
 
+$for = '
+<table class="items" width="100%" style="border-collapse: collapse; font-size: 12px;" cellpadding="8">
+            <thead>
+                <tr>
+                    <td style="font-weight: bold; text-align: center" width="4%">#</td>
+                    <td style="font-weight: bold" width="15%">Equipo</td>
+                    <td style="font-weight: bold" width="12%">Fecha apertura</td>
+                    <td style="font-weight: bold" width="12%">Motivo</td>
+                    <td style="font-weight: bold" width="15%">Solucionado</td>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+';
+
 $plantilla =
 "<html>
 <head>
@@ -36,6 +52,7 @@ $plantilla =
     <div style='text-align: center; font-size: 20px; font-weight: bold; text-decoration: underline; margin-bottom: 20px'>
         Reporte de incidencias
     </div>
+    ".$for."
 </body>
 
 </html>";
