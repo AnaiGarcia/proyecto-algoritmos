@@ -11,11 +11,17 @@ if(strlen($_SESSION['auth_user'])=="")
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reportes de Gestión de Incidencias</title>
     <link rel="stylesheet" href="assets/css/reportes.css"> <!-- Enlace al archivo CSS externo -->
+    <script>
+        function reporte(event) {
+            event.preventDefault();
+            window.open('http://localhost/proyecto-algoritmos/api/reporte-incidencias.php', "_blank");
+        }
+    </script>
 </head>
 <body>
     <div id="inicio" class="container">
         <h1>Reporte de Gestión de Incidencias</h1>
-        <form>
+        <form onsubmit="reporte(event)">
             <div>
                 <label for="report-type">Tipo de Reporte</label>
                 <select id="report-type" name="report-type" required>

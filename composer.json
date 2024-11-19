@@ -14,7 +14,8 @@
     }
   ],
   "require": {
-    "vlucas/phpdotenv": "^5.1"
+    "vlucas/phpdotenv": "^5.1",
+    "mpdf/mpdf": "8.1"
   },
   "autoload": {
     "psr-4": {
