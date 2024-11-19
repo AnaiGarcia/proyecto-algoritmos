@@ -1,6 +1,6 @@
 <?php
 
-include('../../config/libs.php');
+include(__DIR__.'../../config/libs.php');
 
 $dsn = sprintf(
     '%s:host=%s;port=%s;dbname=%s;',
