@@ -1,11 +1,13 @@
 <?php
 session_start();
 error_reporting(0);
-if(strlen($_SESSION['auth_user'])=="")
-{   header("Location: login.php"); }
+if (strlen($_SESSION['auth_user']) == "") {
+    header("Location: login.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,10 +16,18 @@ if(strlen($_SESSION['auth_user'])=="")
     <script>
         function reporte(event) {
             event.preventDefault();
-            window.open('http://localhost/proyecto-algoritmos/api/reporte-incidencias.php', "_blank");
+            const report_type = document.getElementById('report-type').value;
+            const start_date = document.getElementById('start-date').value;
+            const end_date = document.getElementById('end-date').value;
+            const priority = document.getElementById('priority').value;
+            const status = document.getElementById('status').value;
+            if (report_type == 'incidencias') {
+                window.open('http://localhost/proyecto-algoritmos/api/reporte-incidencias.php?start_date=' + start_date + '&end_date=' + end_date + '&priority=' + priority + '&status=' + status, "_blank");
+            }
         }
     </script>
 </head>
+
 <body>
     <div id="inicio" class="container">
         <h1>Reporte de Gestión de Incidencias</h1>
@@ -72,4 +82,5 @@ if(strlen($_SESSION['auth_user'])=="")
         </div>
     </div>
 </body>
+
 </html>
