@@ -1,8 +1,17 @@
 <?php
 
 require __DIR__ . '/../vendor/autoload.php';
+include('../config/db.php');
 
 use Mpdf\Mpdf;
+
+$start_date = $_GET['start_date'];
+$end_date = $_GET['end_date'];
+$priority = $_GET['priority'];
+$status = $_GET['status'];
+
+$stmt = $dbh->query("SELECT * FROM incidencia i inner join equipo e on e.id = i.equipo_id");
+$incidencias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $for = '
 <table class="items" width="100%" style="border-collapse: collapse; font-size: 12px;" cellpadding="8">
@@ -12,16 +21,26 @@ $for = '
                     <td style="font-weight: bold" width="15%">Equipo</td>
                     <td style="font-weight: bold" width="12%">Fecha apertura</td>
                     <td style="font-weight: bold" width="12%">Motivo</td>
-                    <td style="font-weight: bold" width="15%">Solucionado</td>
+                    <td style="font-weight: bold" width="15%">Prioridad</td>
                 </tr>
             </thead>
             <tbody>
-            </tbody>
+            ';
+            foreach($incidencias as $index => $incidencia) {
+                $for .='<tr>
+                <td style="font-weight: bold; text-align: center" width="4%">'.($index + 1).'</td>
+                <td style="font-weight: bold" width="15%">'.$incidencia['nombre'].'</td>
+                <td style="font-weight: bold" width="12%">'.$incidencia['fecha_apertura'].'</td>
+                <td style="font-weight: bold" width="12%">'.$incidencia['descripcion'].'</td>
+                <td style="font-weight: bold" width="15%">'.$incidencia['prioridad'].'</td>
+            </tr>';
+            }
+            $for .='</tbody>
         </table>
 ';
 
 $plantilla =
-"<html>
+    "<html>
 <head>
     <style>
         p {
@@ -52,7 +71,7 @@ $plantilla =
     <div style='text-align: center; font-size: 20px; font-weight: bold; text-decoration: underline; margin-bottom: 20px'>
         Reporte de incidencias
     </div>
-    ".$for."
+    " . $for . "
 </body>
 
 </html>";
