@@ -17,6 +17,7 @@ if (isset($_POST['login'])) {
     $result = $query->fetch();
     if ($result) {
         $_SESSION['auth_user'] = $result['nick'];
+        $_SESSION['auth_rol'] = $result['rol'];
         echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
     } else {
         echo "<script>alert('Datos Invalidos');</script>";

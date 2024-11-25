@@ -42,10 +42,10 @@ if(strlen($_SESSION['auth_user'])=="")
           <img src="assets/images/equipos.png" alt="Equipos" class="icon-img">
           Equipos
         </a>
-        <a href="sedes.php" class="nav-link">
+        <!--<a href="sedes.php" class="nav-link">
           <img src="assets/images/sede.png" alt="Sedes" class="icon-img">
           Sedes
-        </a>
+        </a>-->
         <a href="reportes.php" class="nav-link">
           <img src="assets/images/reportes.png" alt="Reportes" class="icon-img">
           Reportes

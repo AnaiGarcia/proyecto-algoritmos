@@ -1,79 +1,135 @@
-const initialUsers = [
-  { id: 1, name: "Juan Pérez", email: "juan@gmail.com", role: "Admin" },
-  { id: 2, name: "María García", email: "maria@gmail.com", role: "Técnico" },
-  { id: 3, name: "Carlos López", email: "carlos@gmail.com", role: "Técnico" },
-  { id: 4, name: "Enrique Zapata", email: "enrique@gmail.com", role: "Operador" },
-];
+var usuarios = [];
+var usuarioSeleccionado = null;
 
-let selectedUser = null;
-
-function renderUsers() {
-  const userTableBody = document.getElementById('userTableBody');
-  userTableBody.innerHTML = '';
-
-  initialUsers.forEach((user) => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${user.name}</td>
-      <td>${user.email}</td>
-      <td>${user.role}</td>
-      <td>
-        <button class="btn" onclick="modifyUser(${user.id})">Editar</button>
-        <button class="btn" onclick="deleteUser(${user.id})">Eliminar</button>
-      </td>
-    `;
-    userTableBody.appendChild(row);
-  });
+async function listarUsuarios() {
+    const response = await fetch('api/usuarios/listar.php');
+    if (response.ok) {
+        usuarios = await response.json();
+        if (usuarios.error) {
+            console.error('Error al obtener los usuarios:', usuarios.error);
+            return;
+        }
+        actualizarTabla();
+    } else {
+        console.error('Error al conectar con el servidor');
+    }
 }
 
-function modifyUser(userId) {
-  selectedUser = initialUsers.find(user => user.id === userId);
-  if (selectedUser) {
-    document.getElementById('userName').value = selectedUser.name;
-    document.getElementById('userEmail').value = selectedUser.email;
-    document.getElementById('userRole').value = selectedUser.role;
-    document.getElementById('modifyUserForm').classList.remove('hidden');
-  }
+function mostrarFormulario() {
+    usuarioSeleccionado = null;
+    document.getElementById('usuarioForm').style.display = 'block';
 }
 
-function deleteUser(userId) {
-  const userIndex = initialUsers.findIndex(user => user.id === userId);
-  if (userIndex > -1) {
-    initialUsers.splice(userIndex, 1);
-    renderUsers();
-  }
+function resetearFormulario() {
+    document.getElementById('usuarioForm').style.display = 'none';
+    document.getElementById('nombre').value = '';
+    document.getElementById('tipo').value = '';
+    document.getElementById('ubicacion').value = '';
 }
 
-document.getElementById('addUserBtn').addEventListener('click', () => {
-  document.getElementById('modifyUserForm').classList.remove('hidden');
-  document.getElementById('userName').value = '';
-  document.getElementById('userEmail').value = '';
-  document.getElementById('userRole').value = '';
-  document.getElementById('formTitle').textContent = 'Agregar Nuevo Usuario';
-  selectedUser = null;
-});
-document.getElementById('cancelBtn').addEventListener('click', () => {
-  document.getElementById('modifyUserForm').classList.add('hidden');
-  selectedUser = null;
-});
+async function agregarUsuario() {
+    const nombres = document.getElementById('nombres').value;
+    const apellidos = document.getElementById('apellidos').value;
+    const dni = document.getElementById('dni').value;
+    const rol = document.getElementById('rol').value;
+    const correo = document.getElementById('correo').value;
+    const nick = document.getElementById('nick').value;
+    const clave = document.getElementById('clave').value;
 
-document.getElementById('saveChangesBtn').addEventListener('click', () => {
-  if (selectedUser) {
-    selectedUser.name = document.getElementById('userName').value;
-    selectedUser.email = document.getElementById('userEmail').value;
-    selectedUser.role = document.getElementById('userRole').value;
-  } else {
-    const newUser = {
-      id: initialUsers.length + 1,
-      name: document.getElementById('userName').value,
-      email: document.getElementById('userEmail').value,
-      role: document.getElementById('userRole').value,
-    };
-    initialUsers.push(newUser);
-  }
-  
-  renderUsers();
-  document.getElementById('modifyUserForm').classList.add('hidden');
-});
+    if (nombres && apellidos && dni && rol && correo && nick && clave) {
+        let response;
+        if (usuarioSeleccionado) {
+            response = await fetch('api/usuarios/editar.php', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `id=${usuarioSeleccionado.id}&nombres=${nombres}&apellidos=${apellidos}&dni=${dni}&rol=${rol}`
+            });
+        } else {
+            const body = new FormData();
+            body.append('nombres', nombres);
+            body.append('apellidos', apellidos);
+            body.append('dni', dni);
+            body.append('rol', rol);
+            body.append('correo', correo);
+            body.append('nick', nick);
+            body.append('clave', clave);
+            response = await fetch('api/usuarios/guardar.php', {
+                method: 'POST',
+                body
+            });
+        }
 
-renderUsers();
+        const result = await response.json();
+
+        if (result.success) {
+            alert(result.success);
+        } else {
+            alert('Error: ' + result.error);
+        }
+
+        listarUsuarios();
+        resetearFormulario();
+    } else {
+        alert('Por favor, complete todos los campos.');
+    }
+}
+
+function actualizarTabla() {
+    const tabla = document.getElementById('usuarios-body');
+    tabla.innerHTML = '';
+
+    if (usuarios.length) {
+        usuarios.forEach((usuario, index) => {
+            const fila = document.createElement('tr');
+            fila.innerHTML = `
+                <td>${usuario.nombres}</td>
+                <td>${usuario.apellidos}</td>
+                <td>${usuario.correo}</td>
+                <td>${usuario.rol}</td>
+                <td>
+                    <button class="btn" onclick="editarUsuario(${index})">Editar</button>
+                    <button class="btn" onclick="eliminarUsuario(${index})">Eliminar</button>
+                </td>
+            `;
+            tabla.appendChild(fila);
+        });
+    } else {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+                <td rowpan="4">No se encontraron resultados...</td>
+            `;
+        tabla.appendChild(fila);
+    }
+}
+
+async function filtrarUsuarios() {
+    const busqueda = document.getElementById('busqueda').value.toLowerCase();
+    if (busqueda != '') {
+        const response = await fetch(`api/usuarios/busqueda_por_nombre.php?atributo=nombre&valor=${busqueda}`);
+        usuarios = await response.json();
+        actualizarTabla();
+    } else {
+        listarUsuarios();
+    }
+}
+
+function editarUsuario(index) {
+    usuarioSeleccionado = usuarios[index];
+    document.getElementById('nombres').value = usuarioSeleccionado.nombres;
+    document.getElementById('apellidos').value = usuarioSeleccionado.apellidos;
+    document.getElementById('dni').value = usuarioSeleccionado.dni;
+    document.getElementById('rol').value = usuarioSeleccionado.rol;
+    document.getElementById('correo').value = usuarioSeleccionado.correo;
+    document.getElementById('nick').value = usuarioSeleccionado.nick;
+    document.getElementById('clave').value = usuarioSeleccionado.clave;
+    document.getElementById('usuarioForm').style.display = 'block';
+}
+
+function eliminarUsuario(index) {
+    usuarios.splice(index, 1);
+    actualizarTabla();
+}
+
+listarUsuarios();

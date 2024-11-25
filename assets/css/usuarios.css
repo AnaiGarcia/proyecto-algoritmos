@@ -140,3 +140,13 @@ body {
 .hidden {
   display: none;
 }
+
+#usuarioForm input[type="text"],
+#usuarioForm input[type="email"],
+#usuarioForm select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
