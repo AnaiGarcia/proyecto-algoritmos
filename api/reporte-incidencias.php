@@ -18,7 +18,7 @@ if ($priority != null && $priority != -1) {
 }
 
 if ($status != null && $status != -1) {
-    if ($status == 'Abierta' || $status == 'En Progreso') {
+    if ($status == 'Abierta' || $status == 'en-progreso') {
         $sqlWhere .= " and i.fecha_cierre is null";
     } else {
         $sqlWhere .= " and i.fecha_cierre is not null";
