@@ -162,6 +162,21 @@ function editarTecnico() {
   }
 }
 
+function agregarATabla(nombres, apellidos, especialidad, experiencia) {
+  const tbody = document.getElementById('tecnicos-body');
+  const row = tbody.insertRow();
+  row.innerHTML = `
+    <td>${nombres}</td>
+    <td>${apellidos}</td>
+    <td>${especialidad}</td>
+    <td>${experiencia}</td>
+    <td>
+      <button class="btn-icon" onclick="editarDatos(this)">✏️</button>
+      <button class="btn-icon" onclick="eliminarTecnico(this)">🗑️</button>
+    </td>
+  `;
+}
+
 function cancelarEdicion() {
   document.getElementById('formulario-tecnico').style.display = 'none';
 }
@@ -169,7 +184,7 @@ function cancelarEdicion() {
 document.getElementById('searchBtn').addEventListener('click', function () {
   const input = document.getElementById('searchInput').value.toLowerCase();
   const filteredTechnicians = tecnicos.filter(tecnico =>
-    tecnico.nombre.toLowerCase().includes(input) ||
+    tecnico.nombres.toLowerCase().includes(input) ||
     tecnico.especialidad.toLowerCase().includes(input ||
       tecnico.experiencia.toLowerCase().includes(input)
     ));
@@ -197,7 +212,7 @@ function mostrarTecnicos(tecnicos) {
   tbody.innerHTML = ''; // Limpiar la tabla
 
   tecnicos.forEach(tecnico => {
-    agregarTecnicoTabla(tecnico.nombre, tecnico.especialidad, tecnico.experiencia);
+    agregarATabla(tecnico.nombres, tecnico.apellidos, tecnico.especialidad, tecnico.experiencia);
   });
 }
 
