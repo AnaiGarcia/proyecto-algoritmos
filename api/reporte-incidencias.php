@@ -9,12 +9,20 @@ use Mpdf\Mpdf;
 $start_date = $_GET['start_date'] ?? null;
 $end_date = $_GET['end_date'] ?? null;
 $priority = $_GET['priority'] ?? -1;
-$status = $_GET['status'] ?? null;
+$status = $_GET['status'] ?? -1;
 
 $sqlWhere = '';
 
 if ($priority != null && $priority != -1) {
     $sqlWhere = " and i.prioridad = '$priority' ";
+}
+
+if ($status != null && $status != -1) {
+    if ($status == 'Abierta' || $status == 'En Progreso') {
+        $sqlWhere .= " and i.fecha_cierre is null";
+    } else {
+        $sqlWhere .= " and i.fecha_cierre is not null";
+    }
 }
 
 $stmt = $dbh->query("SELECT * FROM incidencia i inner join equipo e on e.id = i.equipo_id where 1 = 1 ".$sqlWhere);
