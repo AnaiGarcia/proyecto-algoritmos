@@ -8,12 +8,12 @@ use Mpdf\Mpdf;
 
 $start_date = $_GET['start_date'] ?? null;
 $end_date = $_GET['end_date'] ?? null;
-$priority = $_GET['priority'] ?? null;
+$priority = $_GET['priority'] ?? -1;
 $status = $_GET['status'] ?? null;
 
 $sqlWhere = '';
 
-if ($priority != null) {
+if ($priority != null && $priority != -1) {
     $sqlWhere = " and i.prioridad = '$priority' ";
 }
 
