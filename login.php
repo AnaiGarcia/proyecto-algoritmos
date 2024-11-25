@@ -45,7 +45,7 @@ if (isset($_POST['login'])) {
             <p class="card-description">Ingrese sus credenciales para acceder a su cuenta</p>
             <form method="POST" class="login-form">
                 <div class="form-group">
-                    <label for="user">Correo Electrónico</label>
+                    <label for="user">Usuario</label>
                     <input type="text" id="user" name="user" placeholder="Ingresa tu usuario" required>
                 </div>
                 <div class="form-group">
