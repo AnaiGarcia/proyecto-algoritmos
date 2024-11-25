@@ -2,16 +2,42 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 include('../config/db.php');
+include_once '../TDA/Pila.php';
 
 use Mpdf\Mpdf;
 
-$start_date = $_GET['start_date'];
-$end_date = $_GET['end_date'];
-$priority = $_GET['priority'];
-$status = $_GET['status'];
+$start_date = $_GET['start_date'] ?? null;
+$end_date = $_GET['end_date'] ?? null;
+$priority = $_GET['priority'] ?? null;
+$status = $_GET['status'] ?? null;
 
-$stmt = $dbh->query("SELECT * FROM incidencia i inner join equipo e on e.id = i.equipo_id");
+$sqlWhere = '';
+
+if ($priority != null) {
+    $sqlWhere = " and i.prioridad = '$priority' ";
+}
+
+$stmt = $dbh->query("SELECT * FROM incidencia i inner join equipo e on e.id = i.equipo_id where 1 = 1 ".$sqlWhere);
 $incidencias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$pila = new Pila();
+
+$fechaInicio = new DateTime($start_date);
+$fechaFin = new DateTime($end_date);
+
+foreach ($incidencias as $incidencia) {
+    $fechaApertura = new DateTime($incidencia['fecha_apertura']);
+    $fechaValida = true;
+    if ($fechaInicio && $fechaApertura < $fechaInicio) {
+        $fechaValida = false;
+    }
+    if ($fechaFin && $fechaApertura > $fechaFin) {
+        $fechaValida = false;
+    }
+    if ($fechaValida) {
+        $pila->push($incidencia);
+    }
+}
 
 $for = '
 <table class="items" width="100%" style="border-collapse: collapse; font-size: 12px;" cellpadding="8">
@@ -26,16 +52,16 @@ $for = '
             </thead>
             <tbody>
             ';
-            foreach($incidencias as $index => $incidencia) {
-                $for .='<tr>
-                <td style="font-weight: bold; text-align: center" width="4%">'.($index + 1).'</td>
-                <td style="font-weight: bold" width="15%">'.$incidencia['nombre'].'</td>
-                <td style="font-weight: bold" width="12%">'.$incidencia['fecha_apertura'].'</td>
-                <td style="font-weight: bold" width="12%">'.$incidencia['descripcion'].'</td>
-                <td style="font-weight: bold" width="15%">'.$incidencia['prioridad'].'</td>
+foreach ($pila->obtenerPila() as $index => $incidencia) {
+    $for .= '<tr>
+                <td style="font-weight: bold; text-align: center" width="4%">' . ($index + 1) . '</td>
+                <td style="font-weight: bold" width="15%">' . $incidencia['nombre'] . '</td>
+                <td style="font-weight: bold" width="12%">' . $incidencia['fecha_apertura'] . '</td>
+                <td style="font-weight: bold" width="12%">' . $incidencia['descripcion'] . '</td>
+                <td style="font-weight: bold" width="15%">' . $incidencia['prioridad'] . '</td>
             </tr>';
-            }
-            $for .='</tbody>
+}
+$for .= '</tbody>
         </table>
 ';
 
