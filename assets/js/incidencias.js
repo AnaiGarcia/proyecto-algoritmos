@@ -50,11 +50,34 @@ function cancelarFormulario() {
 
 function buscarPorId() {
     const id = document.getElementById('busquedaId').value;
+    if (!id.length){
+        cargarIncidencias();
+        return;
+    }
+    const tabla = document.getElementById('incidenciasTableBody');
+    tabla.innerHTML = '';
     const incidencia = incidencias.find(inc => inc.id == id);
     if (incidencia) {
-        alert(`Incidencia encontrada: ${JSON.stringify(incidencia)}`);
+        const row = document.createElement('tr');
+        let accion = ``;
+        if (!incidencia.fecha_cierre) {
+            accion = `<button class="btn" onclick="cambiarEstado(${incidencia.id})">Finalizar</button>`;
+        }
+        row.innerHTML = `
+                    <td>${incidencia.id}</td>
+                    <td>${incidencia.equipo_nombre}</td>
+                    <td>${incidencia.descripcion}</td>
+                    <td>${incidencia.fecha_apertura}</td>
+                    <td>${incidencia.prioridad}</td>
+                    <td>${incidencia.situacion}</td>
+                    <td>
+                        ${accion}
+                    </td>
+                `;
+        tabla.appendChild(row);
     } else {
         alert('Incidencia no encontrada');
+        tabla.innerHTML = '';
     }
 }
 
