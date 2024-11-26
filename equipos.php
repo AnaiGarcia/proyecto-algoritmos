@@ -19,7 +19,8 @@ if(strlen($_SESSION['auth_user'])=="")
         <h1 class="title">Gestión de Equipos</h1>
         
         <div class="actions">
-            <button class="btn" id="btn-agregar" onclick="mostrarFormulario()">Registrar Equipo</button>
+            <button class="btn btn-save" id="btn-agregar" onclick="mostrarFormulario()">Registrar Equipo</button>
+            <button class="btn" onclick="pdf()">Descargar PDF</button>
         </div>
 
         <div class="search-box">

@@ -119,4 +119,8 @@ function eliminarEquipo(index) {
     actualizarTabla();
 }
 
+function pdf() {
+    window.open('http://localhost/proyecto-algoritmos/api/reporte-equipos.php', "_blank");
+}
+
 listarEquipos();

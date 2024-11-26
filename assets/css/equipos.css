@@ -60,6 +60,10 @@ input[type="text"] {
   margin-left: 10px;
 }
 
+.btn-save {
+  background-color: #28a745; /* Color de fondo para el botón de guardar */
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
