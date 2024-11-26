@@ -44,7 +44,7 @@ async function agregarUsuario() {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: `id=${usuarioSeleccionado.id}&nombres=${nombres}&apellidos=${apellidos}&dni=${dni}&rol=${rol}&correo=${correo}&nick=${nick}&clave=${clave}`
+                body: `id=${usuarioSeleccionado.id}&persona_id=${usuarioSeleccionado.persona_id}&nombres=${nombres}&apellidos=${apellidos}&dni=${dni}&rol=${rol}&correo=${correo}&nick=${nick}&clave=${clave}`
             });
         } else {
             const body = new FormData();

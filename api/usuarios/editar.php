@@ -6,6 +6,7 @@ try {
         parse_str(file_get_contents("php://input"), $_PUT);
 
         $id = isset($_PUT['id']) ? $_PUT['id'] : '';
+        $persona_id = isset($_PUT['persona_id']) ? $_PUT['persona_id'] : '';
         $nombres = isset($_PUT['nombres']) ? $_PUT['nombres'] : '';
         $apellidos = isset($_PUT['apellidos']) ? $_PUT['apellidos'] : '';
         $dni = isset($_PUT['dni']) ? $_PUT['dni'] : '';
@@ -24,6 +25,15 @@ try {
         $stmt->bindParam(':clave', $clave);
         $stmt->bindParam(':rol', $rol);
         $stmt->bindParam(':id', $id);
+
+        $stmt->execute();
+
+        $stmt = $dbh->prepare("UPDATE persona SET nombres = :nombres, apellidos = :apellidos, dni = :dni, correo = :correo WHERE id = :persona_id");
+        $stmt->bindParam(':nombres', $nombres);
+        $stmt->bindParam(':apellidos', $apellidos);
+        $stmt->bindParam(':dni', $dni);
+        $stmt->bindParam(':correo', $correo);
+        $stmt->bindParam(':persona_id', $persona_id);
 
         $stmt->execute();
 
