@@ -129,8 +129,30 @@ function editarUsuario(index) {
     document.getElementById('usuarioForm').style.display = 'block';
 }
 
-function eliminarUsuario(index) {
-    usuarios.splice(index, 1);
+async function eliminarUsuario(index) {
+    usuarioSeleccionado = usuarios[index];
+
+    if (usuarioSeleccionado) {
+        let response;
+        response = await fetch('api/usuarios/eliminar.php', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `id=${usuarioSeleccionado.id}`
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert(result.success);
+        } else {
+            alert('Error: ' + result.error);
+        }
+
+        listarUsuarios();
+        resetearFormulario();
+    }
     actualizarTabla();
 }
 
