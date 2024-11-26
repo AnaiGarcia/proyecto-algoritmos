@@ -24,9 +24,9 @@ if ($priority != null && $priority != -1) {
 
 if ($status != null && $status != -1) {
     if ($status == 'abierta' || $status == 'en-progreso') {
-        $sqlWhere .= " and i.fecha_cierre is not null ";
-    } else {
         $sqlWhere .= " and i.fecha_cierre is null ";
+    } else {
+        $sqlWhere .= " and i.fecha_cierre is not null ";
     }
 }
 
