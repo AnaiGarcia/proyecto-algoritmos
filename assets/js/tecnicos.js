@@ -34,7 +34,7 @@ function actualizarTabla() {
               <td>${tecnico.especialidad}</td>
               <td>${tecnico.experiencia}</td>`;
       if (auth_rol && auth_rol == 'Administrador') {
-        fila.innerHTML += `<td><button class="btn" onclick="editarUsuario(${index})">Editar</button>
+        fila.innerHTML += `<td><button class="btn" onclick="editarDatos(this)">Editar</button>
                   <button class="btn" onclick="eliminarUsuario(${index})">Eliminar</button></td>`;
       } else {
         fila.innerHTML += `<td></td>`;
@@ -133,11 +133,12 @@ function eliminarTecnico(button) {
 
 function editarDatos(button) {
   const row = button.closest('tr');
-  tecnicoSeleccionado = row; // Guardamos la referencia a la fila que se va a editar
+  tecnicoSeleccionado = row;
   const celdas = row.getElementsByTagName('td');
   document.getElementById('nombres').value = celdas[0].innerText;
-  document.getElementById('especialidad').value = celdas[1].innerText;
-  document.getElementById('experiencia').value = celdas[2].innerText;
+  document.getElementById('apellidos').value = celdas[1].innerText;
+  document.getElementById('especialidad').value = celdas[2].innerText;
+  document.getElementById('experiencia').value = celdas[3].innerText;
   document.getElementById('btn-guardar').style.display = 'none';
   document.getElementById('btn-editar').style.display = 'inline-block';
   document.getElementById('formulario-tecnico').style.display = 'block';

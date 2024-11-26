@@ -130,7 +130,7 @@ function editarUsuario(index) {
 }
 
 async function eliminarUsuario(index) {
-    if (confirm('Esta seguro de eliminar este usuario?')) {
+    if (confirm('Está seguro de eliminar este usuario?')) {
 
         usuarioSeleccionado = usuarios[index];
 
