@@ -23,6 +23,7 @@ if (strlen($_SESSION['auth_user']) == "") {
       echo '
       <div class="add-user">
           <button id="addUserBtn" class="btn" onclick="mostrarFormulario()">Agregar Usuario</button>
+          <button class="btn" onclick="pdf()">Descargar PDF</button>
         </div>
       ';
     }

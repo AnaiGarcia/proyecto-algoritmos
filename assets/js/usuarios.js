@@ -159,4 +159,8 @@ async function eliminarUsuario(index) {
     }
 }
 
+function pdf() {
+    window.open('http://localhost/proyecto-algoritmos/api/reporte-usuarios.php', "_blank");
+}
+
 listarUsuarios();
