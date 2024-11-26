@@ -6,7 +6,7 @@ try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $equipo_id = isset($_POST['equipo_id']) ? $_POST['equipo_id'] : '';
         $usuario_id = 1;
-        $tecnico_id = 1;
+        $tecnico_id = isset($_POST['tecnico_id']) ? $_POST['tecnico_id'] : '';
         $fecha_apertura = date('Y-m-d H:i:s');
         $descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : '';
         $prioridad = isset($_POST['prioridad']) ? $_POST['prioridad'] : '';

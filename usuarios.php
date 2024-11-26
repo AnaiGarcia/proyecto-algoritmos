@@ -19,7 +19,6 @@ if (strlen($_SESSION['auth_user']) == "") {
   <div class="container">
     <h1 class="title">Gestión de Usuarios</h1>
     <?php
-
     if ($_SESSION['auth_rol'] && $_SESSION['auth_rol'] == 'Administrador') {
       echo '
       <div class="add-user">
@@ -27,7 +26,6 @@ if (strlen($_SESSION['auth_user']) == "") {
         </div>
       ';
     }
-
     ?>
     <table class="user-table">
       <thead>
@@ -52,7 +50,6 @@ if (strlen($_SESSION['auth_user']) == "") {
         <option value="">Selecciona el rol...</option>
         <option value="Administrador">Administrador</option>
         <option value="Operador">Operador</option>
-        <option value="Tecnico">Tecnico</option>
       </select>
       <input type="email" id="correo" placeholder="Correo" required>
       <input type="email" id="nick" placeholder="Nick" required>
@@ -65,7 +62,7 @@ if (strlen($_SESSION['auth_user']) == "") {
   <div class="back-to-top">
     <a href="index.php">Volver al inicio</a>
   </div>
-
+  <input type="text" id="auth_rol" style="display:none" value="<?php echo $_SESSION['auth_rol'] ?>" >
 </body>
 
 </html>

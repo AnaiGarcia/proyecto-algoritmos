@@ -81,18 +81,20 @@ function actualizarTabla() {
     tabla.innerHTML = '';
 
     if (usuarios.length) {
+        const auth_rol = document.getElementById('auth_rol').value;
         usuarios.forEach((usuario, index) => {
             const fila = document.createElement('tr');
             fila.innerHTML = `
                 <td>${usuario.nombres}</td>
                 <td>${usuario.apellidos}</td>
                 <td>${usuario.correo}</td>
-                <td>${usuario.rol}</td>
-                <td>
-                    <button class="btn" onclick="editarUsuario(${index})">Editar</button>
-                    <button class="btn" onclick="eliminarUsuario(${index})">Eliminar</button>
-                </td>
-            `;
+                <td>${usuario.rol}</td>`;
+                if (auth_rol && auth_rol == 'Administrador'){
+                    fila.innerHTML += `<td><button class="btn" onclick="editarUsuario(${index})">Editar</button>
+                    <button class="btn" onclick="eliminarUsuario(${index})">Eliminar</button></td>`;
+                } else  {
+                    fila.innerHTML += `<td></td>`;
+                }
             tabla.appendChild(fila);
         });
     } else {

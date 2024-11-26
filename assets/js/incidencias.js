@@ -1,6 +1,7 @@
 let incidencias = [];
 var incidenciaSeleccionado = null;
 let equipos = [];
+let tecnicos = [];
 
 function registrarIncidencia() {
     document.getElementById('formularioIncidenciaContenedor').style.display = 'block';
@@ -11,6 +12,7 @@ async function guardarIncidencia(event) {
 
     const descripcion = document.getElementById('descripcion').value;
     const equipo_id = document.getElementById('equipos').value;
+    const tecnico_id = document.getElementById('tecnicos').value;
     const prioridad = document.getElementById('prioridad').value;
 
     if (descripcion && equipos && prioridad) {
@@ -18,6 +20,7 @@ async function guardarIncidencia(event) {
         const body = new FormData();
         body.append('descripcion', descripcion);
         body.append('equipo_id', equipo_id);
+        body.append('tecnico_id', tecnico_id);
         body.append('prioridad', prioridad);
         const response = await fetch('api/incidencias/guardar.php', {
             method: 'POST',
@@ -41,6 +44,7 @@ function cancelarFormulario() {
     document.getElementById('formularioIncidenciaContenedor').style.display = 'none';
     document.getElementById('descripcion').value = '';
     document.getElementById('equipos').value = '';
+    document.getElementById('tecnicos').value = '';
     document.getElementById('prioridad').value = '';
 }
 
@@ -96,6 +100,20 @@ async function cargarEquipos() {
     });
 }
 
+async function cargarTecnicos() {
+    const response = await fetch('api/tecnicos/listar.php');
+    tecnicos = await response.json();
+
+    const selectElement = document.getElementById('tecnicos');
+
+    tecnicos.forEach(tecnico => {
+        const option = document.createElement('option');
+        option.value = tecnico.id;
+        option.textContent = tecnico.nombres + ' ' + tecnico.apellidos;
+        selectElement.appendChild(option);
+    });
+}
+
 async function cambiarEstado(id) {
     const solucion = prompt("Ingresa la solucion:");
     if (solucion) {
@@ -126,3 +144,4 @@ function volverAlInicio() {
 
 cargarIncidencias();
 cargarEquipos();
+cargarTecnicos();

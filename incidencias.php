@@ -38,6 +38,11 @@ if(strlen($_SESSION['auth_user'])=="")
                     <option value="">Selecciona un equipo...</option>
                 </select>
 
+                <label for="tecnico">Tecnico:</label>
+                <select id="tecnicos" name="tecnico">
+                    <option value="">Selecciona un tecnico...</option>
+                </select>
+
                 <label for="prioridad">Prioridad:</label>
                 <select id="prioridad" name="prioridad">
                     <option value="">Selecciona la prioridad...</option>
