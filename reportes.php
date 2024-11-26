@@ -14,17 +14,36 @@ if (strlen($_SESSION['auth_user']) == "") {
     <title>Reportes de Gestión de Incidencias</title>
     <link rel="stylesheet" href="assets/css/reportes.css"> <!-- Enlace al archivo CSS externo -->
     <script>
+        let tecnicos = [];
+
+        async function cargarTecnicos() {
+            const response = await fetch('api/tecnicos/listar.php');
+            tecnicos = await response.json();
+
+            const selectElement = document.getElementById('tecnicos');
+
+            tecnicos.forEach(tecnico => {
+                const option = document.createElement('option');
+                option.value = tecnico.id;
+                option.textContent = tecnico.nombres + ' ' + tecnico.apellidos;
+                selectElement.appendChild(option);
+            });
+        }
+
         function reporte(event) {
             event.preventDefault();
             const report_type = document.getElementById('report-type').value;
             const start_date = document.getElementById('start-date').value;
             const end_date = document.getElementById('end-date').value;
+            const tecnico = document.getElementById('tecnicos').value;
             const priority = document.getElementById('priority').value;
             const status = document.getElementById('status').value;
             if (report_type == 'incidencias') {
-                window.open('http://localhost/proyecto-algoritmos/api/reporte-incidencias.php?start_date=' + start_date + '&end_date=' + end_date + '&priority=' + priority + '&status=' + status, "_blank");
+                window.open('http://localhost/proyecto-algoritmos/api/reporte-incidencias.php?start_date=' + start_date + '&end_date=' + end_date + '&priority=' + priority + '&tecnico=' + tecnico + '&status=' + status, "_blank");
             }
         }
+
+        cargarTecnicos();
     </script>
 </head>
 
@@ -52,8 +71,14 @@ if (strlen($_SESSION['auth_user']) == "") {
                 <input type="date" id="end-date" name="end-date" required>
             </div>
             <div>
+                <label for="tecnico">Tecnico:</label>
+                <select id="tecnicos" name="tecnico">
+                    <option value="">Selecciona un tecnico...</option>
+                </select>
+            </div>
+            <div>
                 <label for="priority">Prioridad</label>
-                <select id="priority" name="priority" required>
+                <select id="priority" name="priority">
                     <option value="">Selecciona la prioridad</option>
                     <option value="alta">Alta</option>
                     <option value="media">Media</option>
@@ -62,7 +87,7 @@ if (strlen($_SESSION['auth_user']) == "") {
             </div>
             <div>
                 <label for="status">Estado</label>
-                <select id="status" name="status" required>
+                <select id="status" name="status">
                     <option value="">Selecciona el estado</option>
                     <option value="abierta">Abierta</option>
                     <option value="cerrada">Cerrada</option>

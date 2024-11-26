@@ -8,24 +8,29 @@ use Mpdf\Mpdf;
 
 $start_date = $_GET['start_date'] ?? null;
 $end_date = $_GET['end_date'] ?? null;
+$tecnico = $_GET['tecnico'] ?? -1;
 $priority = $_GET['priority'] ?? -1;
 $status = $_GET['status'] ?? -1;
 
 $sqlWhere = '';
 
+if ($tecnico != null && $tecnico != -1) {
+    $sqlWhere .= " and i.tecnico_id = '$tecnico' ";
+}
+
 if ($priority != null && $priority != -1) {
-    $sqlWhere = " and i.prioridad = '$priority' ";
+    $sqlWhere .= " and i.prioridad = '$priority' ";
 }
 
 if ($status != null && $status != -1) {
-    if ($status == 'Abierta' || $status == 'en-progreso') {
-        $sqlWhere .= " and i.fecha_cierre is null";
+    if ($status == 'abierta' || $status == 'en-progreso') {
+        $sqlWhere .= " and i.fecha_cierre is not null ";
     } else {
-        $sqlWhere .= " and i.fecha_cierre is not null";
+        $sqlWhere .= " and i.fecha_cierre is null ";
     }
 }
 
-$stmt = $dbh->query("SELECT * FROM incidencia i inner join equipo e on e.id = i.equipo_id where 1 = 1 ".$sqlWhere);
+$stmt = $dbh->query("SELECT * FROM incidencia i inner join equipo e on e.id = i.equipo_id inner join tecnico t on t.id = i.tecnico_id inner join persona p on p.id = t.persona_id where 1 = 1 ".$sqlWhere);
 $incidencias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $pila = new Pila();
@@ -53,20 +58,27 @@ $for = '
                 <tr>
                     <td style="font-weight: bold; text-align: center" width="4%">#</td>
                     <td style="font-weight: bold" width="15%">Equipo</td>
+                    <td style="font-weight: bold" width="15%">Tecnico</td>
                     <td style="font-weight: bold" width="12%">Fecha apertura</td>
+                    <td style="font-weight: bold" width="12%">Fecha cierre</td>
                     <td style="font-weight: bold" width="12%">Motivo</td>
                     <td style="font-weight: bold" width="15%">Prioridad</td>
+                    <td style="font-weight: bold" width="15%">Estado</td>
                 </tr>
             </thead>
             <tbody>
             ';
 foreach ($pila->obtenerPila() as $index => $incidencia) {
+    $estado = $incidencia['fecha_cierre'] == null ? 'Cerrada' : 'En proceso';
     $for .= '<tr>
                 <td style="font-weight: bold; text-align: center" width="4%">' . ($index + 1) . '</td>
                 <td style="font-weight: bold" width="15%">' . $incidencia['nombre'] . '</td>
+                <td style="font-weight: bold" width="15%">' . $incidencia['nombres'] . '</td>
                 <td style="font-weight: bold" width="12%">' . $incidencia['fecha_apertura'] . '</td>
+                <td style="font-weight: bold" width="12%">' . $incidencia['fecha_cierre'] . '</td>
                 <td style="font-weight: bold" width="12%">' . $incidencia['descripcion'] . '</td>
                 <td style="font-weight: bold" width="15%">' . $incidencia['prioridad'] . '</td>
+                <td style="font-weight: bold" width="15%">' . $estado . '</td>
             </tr>';
 }
 $for .= '</tbody>
