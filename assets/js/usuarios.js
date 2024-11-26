@@ -89,12 +89,12 @@ function actualizarTabla() {
                 <td>${usuario.apellidos}</td>
                 <td>${usuario.correo}</td>
                 <td>${usuario.rol}</td>`;
-                if (auth_rol && auth_rol == 'Administrador'){
-                    fila.innerHTML += `<td><button class="btn" onclick="editarUsuario(${index})">Editar</button>
+            if (auth_rol && auth_rol == 'Administrador') {
+                fila.innerHTML += `<td><button class="btn" onclick="editarUsuario(${index})">Editar</button>
                     <button class="btn" onclick="eliminarUsuario(${index})">Eliminar</button></td>`;
-                } else  {
-                    fila.innerHTML += `<td></td>`;
-                }
+            } else {
+                fila.innerHTML += `<td></td>`;
+            }
             tabla.appendChild(fila);
         });
     } else {
@@ -130,30 +130,33 @@ function editarUsuario(index) {
 }
 
 async function eliminarUsuario(index) {
-    usuarioSeleccionado = usuarios[index];
+    if (confirm('Esta seguro de eliminar este usuario?')) {
 
-    if (usuarioSeleccionado) {
-        let response;
-        response = await fetch('api/usuarios/eliminar.php', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: `id=${usuarioSeleccionado.id}`
-        });
+        usuarioSeleccionado = usuarios[index];
 
-        const result = await response.json();
+        if (usuarioSeleccionado) {
+            let response;
+            response = await fetch('api/usuarios/eliminar.php', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `id=${usuarioSeleccionado.id}`
+            });
 
-        if (result.success) {
-            alert(result.success);
-        } else {
-            alert('Error: ' + result.error);
+            const result = await response.json();
+
+            if (result.success) {
+                alert(result.success);
+            } else {
+                alert('Error: ' + result.error);
+            }
+
+            listarUsuarios();
+            resetearFormulario();
         }
-
-        listarUsuarios();
-        resetearFormulario();
+        actualizarTabla();
     }
-    actualizarTabla();
 }
 
 listarUsuarios();
