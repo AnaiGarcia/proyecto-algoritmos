@@ -25,18 +25,20 @@ function actualizarTabla() {
   tabla.innerHTML = '';
 
   if (tecnicos.length) {
+    const auth_rol = document.getElementById('auth_rol').value;
     tecnicos.forEach((tecnico, index) => {
       const fila = document.createElement('tr');
       fila.innerHTML = `
               <td>${tecnico.nombres}</td>
               <td>${tecnico.apellidos}</td>
               <td>${tecnico.especialidad}</td>
-              <td>${tecnico.experiencia}</td>
-              <td>
-                  <button class="btn" onclick="editarUsuario(${index})">Editar</button>
-                  <button class="btn" onclick="eliminarUsuario(${index})">Eliminar</button>
-              </td>
-          `;
+              <td>${tecnico.experiencia}</td>`;
+      if (auth_rol && auth_rol == 'Administrador') {
+        fila.innerHTML += `<td><button class="btn" onclick="editarUsuario(${index})">Editar</button>
+                  <button class="btn" onclick="eliminarUsuario(${index})">Eliminar</button></td>`;
+      } else {
+        fila.innerHTML += `<td></td>`;
+      }
       tabla.appendChild(fila);
     });
   } else {
@@ -165,16 +167,19 @@ function editarTecnico() {
 function agregarATabla(nombres, apellidos, especialidad, experiencia) {
   const tbody = document.getElementById('tecnicos-body');
   const row = tbody.insertRow();
+  const auth_rol = document.getElementById('auth_rol').value;
   row.innerHTML = `
     <td>${nombres}</td>
     <td>${apellidos}</td>
     <td>${especialidad}</td>
     <td>${experiencia}</td>
-    <td>
-      <button class="btn-icon" onclick="editarDatos(this)">✏️</button>
-      <button class="btn-icon" onclick="eliminarTecnico(this)">🗑️</button>
-    </td>
   `;
+  if (auth_rol && auth_rol == 'Administrador') {
+    row.innerHTML += `<td><button class="btn-icon" onclick="editarDatos(this)">✏️</button>
+      <button class="btn-icon" onclick="eliminarTecnico(this)">🗑️</button></td>`;
+  } else {
+    row.innerHTML += `<td></td>`;
+  }
 }
 
 function cancelarEdicion() {

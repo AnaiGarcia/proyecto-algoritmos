@@ -49,7 +49,7 @@ if (strlen($_SESSION['auth_user']) == "") {
       <select id="rol" name="rol" required>
         <option value="">Selecciona el rol...</option>
         <option value="Administrador">Administrador</option>
-        <option value="Operador">Operador</option>
+        <option value="Supervisor">Supervisor</option>
       </select>
       <input type="email" id="correo" placeholder="Correo" required>
       <input type="email" id="nick" placeholder="Nick" required>

@@ -16,15 +16,18 @@ if(strlen($_SESSION['auth_user'])=="")
   <a name="inicio"></a> <!-- Ancla para volver al inicio -->
   <div class="container">
     <h1 class="title">Gestión de Técnicos</h1>
-
-    <div class="buttons">
-      
-    
+    <?php
+    if ($_SESSION['auth_rol'] && $_SESSION['auth_rol'] == 'Administrador') {
+      echo '
+      <div class="buttons">
       <button class="btn btn-secondary" onclick="mostrarFormulario()">
         <span class="icon">➕</span>
         Agregar Técnico
       </button>
     </div>
+      ';
+    }
+    ?>
 
     <!-- Formulario para agregar o editar técnicos -->
     <div id="formulario-tecnico" class="formulario" style="display:none;">
@@ -69,7 +72,7 @@ if(strlen($_SESSION['auth_user'])=="")
   <div class="back-to-top">
     <a href="index.php" class="btn">Volver al Inicio</a>
   </div>
-
+  <input type="text" id="auth_rol" style="display:none" value="<?php echo $_SESSION['auth_rol'] ?>" >
   <!-- Asegúrate de que el archivo JavaScript esté correctamente vinculado -->
   <script src="assets/js/tecnicos.js"></script>
 </body>
