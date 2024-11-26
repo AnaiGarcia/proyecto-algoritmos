@@ -22,7 +22,7 @@ if (strlen($_SESSION['auth_user']) == "") {
     if ($_SESSION['auth_rol'] && $_SESSION['auth_rol'] == 'Administrador') {
       echo '
       <div class="add-user">
-          <button id="addUserBtn" class="btn" onclick="mostrarFormulario()">Agregar Usuario</button>
+          <button id="addUserBtn" class="btn btn-save" onclick="mostrarFormulario()">Agregar Usuario</button>
           <button class="btn" onclick="pdf()">Descargar PDF</button>
         </div>
       ';

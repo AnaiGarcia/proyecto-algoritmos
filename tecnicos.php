@@ -24,6 +24,7 @@ if(strlen($_SESSION['auth_user'])=="")
         <span class="icon">➕</span>
         Agregar Técnico
       </button>
+      <button class="btn" onclick="pdf()">Descargar PDF</button>
     </div>
       ';
     }

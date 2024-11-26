@@ -248,3 +248,7 @@ function bubblesort(array) {
 
   return arrCopy;
 }
+
+function pdf() {
+  window.open('http://localhost/proyecto-algoritmos/api/reporte-tecnicos.php', "_blank");
+}
