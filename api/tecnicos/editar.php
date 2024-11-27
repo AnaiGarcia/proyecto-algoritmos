@@ -6,24 +6,34 @@ try {
         parse_str(file_get_contents("php://input"), $_PUT);
 
         $id = isset($_PUT['id']) ? $_PUT['id'] : '';
-        $nombre = isset($_PUT['nombre']) ? $_PUT['nombre'] : '';
-        $tipo = isset($_PUT['tipo']) ? $_PUT['tipo'] : '';
-        $ubicacion = isset($_PUT['ubicacion']) ? $_PUT['ubicacion'] : '';
+        $persona_id = isset($_PUT['persona_id']) ? $_PUT['persona_id'] : '';
+        $nombres = isset($_PUT['nombres']) ? $_PUT['nombres'] : '';
+        $apellidos = isset($_PUT['apellidos']) ? $_PUT['apellidos'] : '';
+        $dni = isset($_PUT['dni']) ? $_PUT['dni'] : '';
+        $experiencia = isset($_PUT['experiencia']) ? $_PUT['experiencia'] : '';
+        $especialidad = isset($_PUT['especialidad']) ? $_PUT['especialidad'] : '';
 
-        if (empty($id) || empty($nombre) || empty($tipo) || empty($ubicacion)) {
+        if (empty($id) || empty($nombres) || empty($apellidos) || empty($dni) || empty($especialidad) || empty($experiencia)) {
             echo json_encode(['error' => 'Todos los campos son obligatorios']);
             exit;
         }
 
-        $stmt = $dbh->prepare("UPDATE equipo SET nombre = :nombre, tipo = :tipo, ubicacion = :ubicacion WHERE id = :id");
-        $stmt->bindParam(':nombre', $nombre);
-        $stmt->bindParam(':tipo', $tipo);
-        $stmt->bindParam(':ubicacion', $ubicacion);
+        $stmt = $dbh->prepare("UPDATE tecnico SET experiencia = :experiencia, especialidad = :especialidad WHERE id = :id");
+        $stmt->bindParam(':experiencia', $experiencia);
+        $stmt->bindParam(':especialidad', $especialidad);
         $stmt->bindParam(':id', $id);
 
         $stmt->execute();
 
-        echo json_encode(['success' => 'Equipo actualizado correctamente']);
+        $stmt = $dbh->prepare("UPDATE persona SET nombres = :nombres, apellidos = :apellidos, dni = :dni WHERE id = :persona_id");
+        $stmt->bindParam(':nombres', $nombres);
+        $stmt->bindParam(':apellidos', $apellidos);
+        $stmt->bindParam(':dni', $dni);
+        $stmt->bindParam(':persona_id', $persona_id);
+
+        $stmt->execute();
+
+        echo json_encode(['success' => 'Tecnico actualizado correctamente']);
     } else {
         echo json_encode(['error' => 'Método de solicitud no permitido']);
     }

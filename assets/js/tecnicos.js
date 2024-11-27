@@ -35,7 +35,7 @@ function actualizarTabla() {
               <td>${tecnico.especialidad}</td>
               <td>${tecnico.experiencia}</td>`;
       if (auth_rol && auth_rol == 'Administrador') {
-        fila.innerHTML += `<td><button class="btn" onclick="editarDatos(this)">Editar</button>
+        fila.innerHTML += `<td><button class="btn" onclick="editarDatos(${index})">Editar</button>
                   <button class="btn" onclick="eliminarTecnico(${index})">Eliminar</button></td>`;
       } else {
         fila.innerHTML += `<td></td>`;
@@ -122,7 +122,6 @@ async function agregarTecnicoTabla() {
     }
 
     listarTecnicos();
-    mostrarFormulario();
   } else {
     alert('Por favor, complete todos los campos.');
   }
@@ -134,56 +133,67 @@ async function eliminarTecnico(index) {
     tecnicoSeleccionado = tecnicos[index];
 
     if (tecnicoSeleccionado) {
-        let response = await fetch('api/tecnicos/eliminar.php', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: `id=${tecnicoSeleccionado.id}`
-        });
+      let response = await fetch('api/tecnicos/eliminar.php', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `id=${tecnicoSeleccionado.id}`
+      });
 
-        const result = await response.json();
+      const result = await response.json();
 
-        if (result.success) {
-            alert(result.success);
-        } else {
-            alert('Error: ' + result.error);
-        }
+      if (result.success) {
+        alert(result.success);
+      } else {
+        alert('Error: ' + result.error);
+      }
 
-        listarTecnicos();
+      listarTecnicos();
     }
     actualizarTabla();
-}
+  }
 }
 
-function editarDatos(button) {
-  const row = button.closest('tr');
-  tecnicoSeleccionado = row;
-  const celdas = row.getElementsByTagName('td');
-  document.getElementById('nombres').value = celdas[0].innerText;
-  document.getElementById('apellidos').value = celdas[1].innerText;
-  document.getElementById('especialidad').value = celdas[2].innerText;
-  document.getElementById('experiencia').value = celdas[3].innerText;
+function editarDatos(index) {
+  tecnicoSeleccionado = tecnicos[index];
+  document.getElementById('nombres').value = tecnicoSeleccionado.nombres;
+  document.getElementById('apellidos').value = tecnicoSeleccionado.apellidos;
+  document.getElementById('dni').value = tecnicoSeleccionado.dni;
+  document.getElementById('especialidad').value = tecnicoSeleccionado.especialidad;
+  document.getElementById('experiencia').value = tecnicoSeleccionado.experiencia;
   document.getElementById('btn-guardar').style.display = 'none';
   document.getElementById('btn-editar').style.display = 'inline-block';
   document.getElementById('formulario-tecnico').style.display = 'block';
 }
 
-function editarTecnico() {
+async function editarTecnico() {
   if (tecnicoSeleccionado) {
-    const nombre = document.getElementById('nombres').value;
-    const especialidad = document.getElementById('especialidad').value;
+    const nombres = document.getElementById('nombres').value;
+    const apellidos = document.getElementById('apellidos').value;
+    const dni = document.getElementById('dni').value;
     const experiencia = document.getElementById('experiencia').value;
+    const especialidad = document.getElementById('especialidad').value;
 
-    if (nombre && especialidad && experiencia) {
-      if (!tecnicoYaExiste(nombre)) {
-        tecnicoSeleccionado.cells[0].innerText = nombre;
-        tecnicoSeleccionado.cells[1].innerText = especialidad;
-        tecnicoSeleccionado.cells[2].innerText = experiencia;
-        document.getElementById('formulario-tecnico').style.display = 'none';
+    if (nombres && apellidos && dni && experiencia && especialidad) {
+      let response = await fetch('api/tecnicos/editar.php', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `id=${tecnicoSeleccionado.id}&persona_id=${tecnicoSeleccionado.persona_id}&nombres=${nombres}&apellidos=${apellidos}&dni=${dni}&experiencia=${experiencia}&especialidad=${especialidad}`
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        alert(result.success);
       } else {
-        alert('Ya existe un técnico con ese nombre.');
+        alert('Error: ' + result.error);
       }
+
+      listarTecnicos();
+      mostrarFormulario();
+      document.getElementById('formulario-tecnico').style.display = 'none';
     } else {
       alert('Por favor, complete todos los campos.');
     }
