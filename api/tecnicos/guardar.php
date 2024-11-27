@@ -6,16 +6,18 @@ try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nombres = isset($_POST['nombres']) ? $_POST['nombres'] : '';
         $apellidos = isset($_POST['apellidos']) ? $_POST['apellidos'] : '';
+        $dni = isset($_POST['dni']) ? $_POST['dni'] : '';
         $especialidad = isset($_POST['especialidad']) ? $_POST['especialidad'] : '';
         $experiencia = isset($_POST['experiencia']) ? $_POST['experiencia'] : '';
-        if (empty($nombres) || empty($apellidos) || empty($especialidad) || empty($experiencia)) {
+        if (empty($nombres) || empty($apellidos) || empty($dni) || empty($especialidad) || empty($experiencia)) {
             echo json_encode(['error' => 'Todos los campos son obligatorios']);
             exit;
         }
 
-        $stmt = $dbh->prepare("INSERT INTO persona (nombres, apellidos) VALUES (:nombres, :apellidos)");
+        $stmt = $dbh->prepare("INSERT INTO persona (nombres, apellidos, dni) VALUES (:nombres, :apellidos, :dni)");
         $stmt->bindParam(':nombres', $nombres);
         $stmt->bindParam(':apellidos', $apellidos);
+        $stmt->bindParam(':dni', $dni);
 
         $stmt->execute();
         $personaid = $dbh->lastInsertId();

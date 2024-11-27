@@ -31,6 +31,7 @@ function actualizarTabla() {
       fila.innerHTML = `
               <td>${tecnico.nombres}</td>
               <td>${tecnico.apellidos}</td>
+              <td>${tecnico.dni}</td>
               <td>${tecnico.especialidad}</td>
               <td>${tecnico.experiencia}</td>`;
       if (auth_rol && auth_rol == 'Administrador') {
@@ -54,6 +55,7 @@ function mostrarFormulario() {
   document.getElementById('formulario-tecnico').style.display = 'block';
   document.getElementById('nombres').value = '';
   document.getElementById('apellidos').value = '';
+  document.getElementById('dni').value = '';
   document.getElementById('especialidad').value = '';
   document.getElementById('experiencia').value = '';
   document.getElementById('btn-guardar').style.display = 'inline-block';
@@ -84,6 +86,7 @@ function tecnicoYaExiste(nombre) {
 async function agregarTecnicoTabla() {
   const nombres = document.getElementById('nombres').value;
   const apellidos = document.getElementById('apellidos').value;
+  const dni = document.getElementById('dni').value;
   const experiencia = document.getElementById('experiencia').value;
   const especialidad = document.getElementById('especialidad').value;
 
@@ -95,12 +98,13 @@ async function agregarTecnicoTabla() {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: `id=${tecnicoSeleccionado.id}&nombres=${nombres}&apellidos=${apellidos}&dni=${dni}&rol=${rol}`
+        body: `id=${tecnicoSeleccionado.id}&nombres=${nombres}&apellidos=${apellidos}&dni=${dni}&experiencia=${experiencia}&especialidad=${especialidad}`
       });
     } else {
       const body = new FormData();
       body.append('nombres', nombres);
       body.append('apellidos', apellidos);
+      body.append('dni', dni);
       body.append('experiencia', experiencia);
       body.append('especialidad', especialidad);
       response = await fetch('api/tecnicos/guardar.php', {
@@ -186,13 +190,14 @@ function editarTecnico() {
   }
 }
 
-function agregarATabla(nombres, apellidos, especialidad, experiencia) {
+function agregarATabla(nombres, apellidos, dni, especialidad, experiencia) {
   const tbody = document.getElementById('tecnicos-body');
   const row = tbody.insertRow();
   const auth_rol = document.getElementById('auth_rol').value;
   row.innerHTML = `
     <td>${nombres}</td>
     <td>${apellidos}</td>
+    <td>${dni}</td>
     <td>${especialidad}</td>
     <td>${experiencia}</td>
   `;
@@ -239,7 +244,7 @@ function mostrarTecnicos(tecnicos) {
   tbody.innerHTML = ''; // Limpiar la tabla
 
   tecnicos.forEach(tecnico => {
-    agregarATabla(tecnico.nombres, tecnico.apellidos, tecnico.especialidad, tecnico.experiencia);
+    agregarATabla(tecnico.nombres, tecnico.dni, tecnico.apellidos, tecnico.especialidad, tecnico.experiencia);
   });
 }
 

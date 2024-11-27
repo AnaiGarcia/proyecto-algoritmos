@@ -34,6 +34,7 @@ if(strlen($_SESSION['auth_user'])=="")
     <div id="formulario-tecnico" class="formulario" style="display:none;">
       <input type="text" id="nombres" placeholder="Nombres del técnico" class="input-search">
       <input type="text" id="apellidos" placeholder="Apellidos del técnico" class="input-search">
+      <input type="text" id="dni" placeholder="DNI" class="input-search">
       <input type="text" id="especialidad" placeholder="Especialidad" class="input-search">
       <input type="text" id="experiencia" placeholder="Experiencia" class="input-search">
       <button class="btn btn-primary" id="btn-guardar" onclick="agregarTecnico()">Agregar Técnico</button>
@@ -58,6 +59,7 @@ if(strlen($_SESSION['auth_user'])=="")
         <tr>
           <th>Nombres</th>
           <th>Apellidos</th>
+          <th>DNI</th>
           <th>Especialidad</th>
           <th>Experiencia</th>
           <th>Acciones</th>
