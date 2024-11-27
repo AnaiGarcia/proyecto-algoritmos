@@ -12,19 +12,26 @@ try {
         $dni = isset($_PUT['dni']) ? $_PUT['dni'] : '';
         $correo = isset($_PUT['correo']) ? $_PUT['correo'] : '';
         $nick = isset($_PUT['nick']) ? $_PUT['nick'] : '';
-        $clave = isset($_PUT['clave']) ? md5($_PUT['clave']) : '';
+        $clave = isset($_PUT['clave']) && $_PUT['clave'] != '' ? md5($_PUT['clave']) : '';
         $rol = isset($_PUT['rol']) ? $_PUT['rol'] : '';
 
-        if (empty($id) || empty($nombres) || empty($apellidos) || empty($dni) || empty($rol) || empty($correo) || empty($nick) || empty($clave)) {
+        if (empty($id) || empty($nombres) || empty($apellidos) || empty($dni) || empty($rol) || empty($correo) || empty($nick)) {
             echo json_encode(['error' => 'Todos los campos son obligatorios']);
             exit;
         }
 
-        $stmt = $dbh->prepare("UPDATE usuario SET nick = :nick, clave = :clave, rol = :rol WHERE id = :id");
-        $stmt->bindParam(':nick', $nick);
-        $stmt->bindParam(':clave', $clave);
-        $stmt->bindParam(':rol', $rol);
-        $stmt->bindParam(':id', $id);
+        if (strlen($clave) > 0) {
+            $stmt = $dbh->prepare("UPDATE usuario SET nick = :nick, clave = :clave, rol = :rol WHERE id = :id");
+            $stmt->bindParam(':nick', $nick);
+            $stmt->bindParam(':clave', $clave);
+            $stmt->bindParam(':rol', $rol);
+            $stmt->bindParam(':id', $id);
+        } else {
+            $stmt = $dbh->prepare("UPDATE usuario SET nick = :nick, rol = :rol WHERE id = :id");
+            $stmt->bindParam(':nick', $nick);
+            $stmt->bindParam(':rol', $rol);
+            $stmt->bindParam(':id', $id);
+        }
 
         $stmt->execute();
 

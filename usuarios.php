@@ -53,8 +53,8 @@ if (strlen($_SESSION['auth_user']) == "") {
         <option value="Supervisor">Supervisor</option>
       </select>
       <input type="email" id="correo" placeholder="Correo" required>
-      <input type="email" id="nick" placeholder="Nick" required>
-      <input type="email" id="clave" placeholder="Clave" required>
+      <input type="text" id="nick" placeholder="Nick" required>
+      <input type="password" id="clave" placeholder="Clave" required>
       <button id="saveChangesBtn" class="btn btn-save" onclick="agregarUsuario()">Guardar Cambios</button>
       <button id="cancelBtn" class="btn btn-cancel" onclick="resetearFormulario()">Cancelar</button>
     </div>

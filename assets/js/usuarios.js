@@ -18,13 +18,24 @@ async function listarUsuarios() {
 function mostrarFormulario() {
     usuarioSeleccionado = null;
     document.getElementById('usuarioForm').style.display = 'block';
+    document.getElementById('nombres').value = '';
+    document.getElementById('apellidos').value = '';
+    document.getElementById('dni').value = '';
+    document.getElementById('rol').value = '';
+    document.getElementById('correo').value = '';
+    document.getElementById('nick').value = '';
+    document.getElementById('nick').value = '';
 }
 
 function resetearFormulario() {
     document.getElementById('usuarioForm').style.display = 'none';
-    document.getElementById('nombre').value = '';
-    document.getElementById('tipo').value = '';
-    document.getElementById('ubicacion').value = '';
+    document.getElementById('nombres').value = '';
+    document.getElementById('apellidos').value = '';
+    document.getElementById('dni').value = '';
+    document.getElementById('rol').value = '';
+    document.getElementById('correo').value = '';
+    document.getElementById('nick').value = '';
+    document.getElementById('nick').value = '';
 }
 
 async function agregarUsuario() {
@@ -36,7 +47,7 @@ async function agregarUsuario() {
     const nick = document.getElementById('nick').value;
     const clave = document.getElementById('clave').value;
 
-    if (nombres && apellidos && dni && rol && correo && nick && clave) {
+    if (nombres && apellidos && dni && rol && correo && nick) {
         let response;
         if (usuarioSeleccionado) {
             response = await fetch('api/usuarios/editar.php', {
