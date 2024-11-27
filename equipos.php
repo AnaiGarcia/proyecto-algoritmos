@@ -46,7 +46,6 @@ if(strlen($_SESSION['auth_user'])=="")
                 </tr>
             </thead>
             <tbody id="equipos-body">
-                <!-- Las filas de equipos se añadirán aquí dinámicamente -->
             </tbody>
         </table>
     </div>

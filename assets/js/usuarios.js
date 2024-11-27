@@ -135,8 +135,7 @@ async function eliminarUsuario(index) {
         usuarioSeleccionado = usuarios[index];
 
         if (usuarioSeleccionado) {
-            let response;
-            response = await fetch('api/usuarios/eliminar.php', {
+            let response = await fetch('api/usuarios/eliminar.php', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'

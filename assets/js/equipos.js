@@ -114,9 +114,33 @@ function editarEquipo(index) {
     document.getElementById('formulario').style.display = 'block';
 }
 
-function eliminarEquipo(index) {
-    equipos.splice(index, 1);
-    actualizarTabla();
+async function eliminarEquipo(index) {
+    if (confirm('Está seguro de eliminar este equipo?')) {
+
+        equipoSeleccionado = equipos[index];
+
+        if (equipoSeleccionado) {
+            let response = await fetch('api/equipos/eliminar.php', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `id=${equipoSeleccionado.id}`
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                alert(result.success);
+            } else {
+                alert('Error: ' + result.error);
+            }
+
+            listarEquipos();
+            resetearFormulario();
+        }
+        actualizarTabla();
+    }
 }
 
 function pdf() {
