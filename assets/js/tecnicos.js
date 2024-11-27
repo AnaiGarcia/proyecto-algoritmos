@@ -262,8 +262,8 @@ function mostrarTecnicos(tecnicos) {
 function quicksort(array) {
   if (array.length < 2) return array;
   const pivot = array[0];
-  const less = array.slice(1).filter(item => item.nombre < pivot.nombre);
-  const greater = array.slice(1).filter(item => item.nombre >= pivot.nombre);
+  const less = array.slice(1).filter(item => item.nombres < pivot.nombres);
+  const greater = array.slice(1).filter(item => item.nombres >= pivot.nombres);
   return [...quicksort(less), pivot, ...quicksort(greater)];
 }
 
@@ -274,7 +274,7 @@ function bubblesort(array) {
 
   for (let i = 0; i < n - 1; i++) {
     for (let j = 0; j < n - i - 1; j++) {
-      if (arrCopy[j].nombre > arrCopy[j + 1].nombre) {
+      if (arrCopy[j].nombres > arrCopy[j + 1].nombres) {
         const temp = arrCopy[j];
         arrCopy[j] = arrCopy[j + 1];
         arrCopy[j + 1] = temp;
