@@ -35,7 +35,7 @@ function actualizarTabla() {
               <td>${tecnico.experiencia}</td>`;
       if (auth_rol && auth_rol == 'Administrador') {
         fila.innerHTML += `<td><button class="btn" onclick="editarDatos(this)">Editar</button>
-                  <button class="btn" onclick="eliminarUsuario(${index})">Eliminar</button></td>`;
+                  <button class="btn" onclick="eliminarTecnico(${index})">Eliminar</button></td>`;
       } else {
         fila.innerHTML += `<td></td>`;
       }
@@ -124,11 +124,32 @@ async function agregarTecnicoTabla() {
   }
 }
 
-function eliminarTecnico(button) {
-  const row = button.closest('tr');
-  const nombre = row.cells[0].innerText;
-  tecnicos = tecnicos.filter(tecnico => tecnico.nombre !== nombre); // Actualizar array
-  row.remove();
+async function eliminarTecnico(index) {
+  if (confirm('Está seguro de eliminar este tecnico?')) {
+
+    tecnicoSeleccionado = tecnicos[index];
+
+    if (tecnicoSeleccionado) {
+        let response = await fetch('api/tecnicos/eliminar.php', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `id=${tecnicoSeleccionado.id}`
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert(result.success);
+        } else {
+            alert('Error: ' + result.error);
+        }
+
+        listarTecnicos();
+    }
+    actualizarTabla();
+}
 }
 
 function editarDatos(button) {
